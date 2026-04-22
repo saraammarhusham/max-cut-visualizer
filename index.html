@@ -340,18 +340,185 @@ input[type=range] { accent-color: var(--accent); width: 110px; }
 }
 
 /* ============================================================
-   TWO-COLUMN LAYOUT (VISUALIZER)
+   THREE-COLUMN LAYOUT (VISUALIZER — ENHANCED)
    ============================================================ */
 .viz-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 20px;
+  grid-template-columns: 260px 1fr 300px;
+  gap: 16px;
   align-items: start;
 }
-@media (max-width: 900px) { .viz-layout { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .viz-layout { grid-template-columns: 260px 1fr; } }
+@media (max-width: 760px)  { .viz-layout { grid-template-columns: 1fr; } }
 
 .viz-controls { }
-.viz-main { }
+.viz-main     { }
+.viz-teaching { }
+
+/* Viz teaching panel — pseudocode trace */
+.pseudo-trace-panel {
+  background: #080c17;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.pseudo-trace-panel .pt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.pseudo-trace-panel .pt-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.pt-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: #1e3a5f;
+  color: #93c5fd;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+.viz-pseudo-line {
+  display: block;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.85;
+  white-space: pre;
+  transition: background 0.15s, color 0.15s;
+  cursor: default;
+}
+.viz-pseudo-line.vpl-active {
+  background: rgba(59,130,246,0.22);
+  color: #bfdbfe;
+  box-shadow: inset 3px 0 0 #3b82f6;
+}
+.viz-pseudo-line.vpl-done {
+  color: var(--text3);
+}
+.vpl-kw  { color: #7dd3fc; }
+.vpl-fn  { color: #a78bfa; }
+.vpl-cmt { color: var(--text3); font-style: italic; }
+.vpl-num { color: #86efac; }
+
+/* Rich explanation box */
+.viz-explain-rich {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.ver-header {
+  background: var(--bg4);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.ver-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent2);
+}
+.ver-body {
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text2);
+  min-height: 90px;
+}
+.ver-why {
+  padding: 10px 16px 14px;
+  font-size: 12px;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  font-style: italic;
+}
+
+/* Edge trace panel */
+.edge-trace-list {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  max-height: 130px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+.edge-trace-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  border-bottom: 1px solid #1a2236;
+}
+.et-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.et-cut   { background: var(--green); }
+.et-nocut { background: var(--uncut-edge); }
+
+/* Structured edge input */
+.edge-builder { margin-top: 10px; }
+.edge-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.edge-row input[type=number] {
+  width: 54px;
+  text-align: center;
+  padding: 6px 8px;
+  margin: 0;
+}
+.edge-row-sep {
+  color: var(--text3);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.edge-remove-btn {
+  background: none;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 3px 7px;
+  font-size: 12px;
+  line-height: 1;
+  transition: all 0.14s;
+}
+.edge-remove-btn:hover { border-color: var(--red); color: var(--red); }
+.btn-add-edge {
+  background: none;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  color: var(--accent2);
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 12px;
+  width: 100%;
+  margin-top: 4px;
+  transition: all 0.14s;
+  font-family: var(--font-mono);
+}
+.btn-add-edge:hover { border-color: var(--accent2); background: var(--bg3); }
+
+/* Preset notes made secondary */
+.preset-notes-section {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  opacity: 0.85;
+}
 
 /* ============================================================
    SELECT / INPUT
@@ -1282,51 +1449,56 @@ table.edu-table tr:hover td { background: var(--bg3); }
 </div>
 
 <!-- ============================================================
-     SECTION: VISUALIZER
+     SECTION: VISUALIZER  (ENHANCED)
      ============================================================ -->
 <div id="sec-visualizer" class="section">
   <div class="section-hero">
     <div class="section-tag">Section 6</div>
     <h1 class="section-title">Interactive Visualizer</h1>
-    <p class="section-subtitle">Enter your own graph or choose a preset. Run brute force or local search interactively.</p>
+    <p class="section-subtitle">Build a graph, pick an algorithm, and watch every line execute — with full edge-level explanations.</p>
   </div>
 
   <div class="viz-layout">
-    <!-- LEFT: Controls -->
+
+    <!-- ===================== LEFT: Controls ===================== -->
     <div class="viz-controls">
-      <div class="card">
-        <div class="card-title">Graph Input</div>
-        <label>Preset Examples</label>
+
+      <!-- GRAPH INPUT CARD — structured builder -->
+      <div class="card" style="padding:16px;">
+        <div class="card-title">Graph Builder</div>
+
+        <label>Preset</label>
         <select id="vizPreset" onchange="vizLoadPreset()">
-          <option value="triangle">Triangle (K₃) — Local search may find optimal</option>
-          <option value="square">Square + diagonals (K₄) — 4 vertices, dense</option>
-          <option value="petersen">Petersen-like — 6 vertices, local may suboptimal</option>
-          <option value="custom">Custom (edit below)</option>
+          <option value="square">Square + diagonals (K₄)</option>
+          <option value="triangle">Triangle (K₃)</option>
+          <option value="petersen">Petersen-like (6 vertices)</option>
+          <option value="custom">Custom</option>
         </select>
 
-        <label>Number of Vertices</label>
-        <input type="number" id="vizN" value="4" min="2" max="12">
+        <label style="margin-top:12px;">Vertices (n)</label>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
+          <input type="number" id="vizN" value="4" min="2" max="12"
+            style="width:70px;margin:0;" oninput="vizOnNChange()">
+          <span style="font-size:12px;color:var(--text3);">Labels: A B C … (0-indexed)</span>
+        </div>
 
-        <label>Edge List (one per line: u v)</label>
-        <textarea id="vizEdges" rows="6">0 1
-1 2
-2 3
-3 0
-0 2</textarea>
+        <label style="margin-top:12px;">Edges</label>
+        <div id="edgeBuilder" class="edge-builder"></div>
+        <button class="btn-add-edge" onclick="vizAddEdgeRow()">＋ Add Edge</button>
 
-        <button class="btn btn-primary" style="width:100%;margin-top:12px;" onclick="vizBuild()">🔨 Build Graph</button>
-        <div id="vizError" style="color:var(--red);font-size:12px;margin-top:6px;"></div>
+        <div id="vizError" style="color:var(--red);font-size:12px;margin-top:8px;min-height:16px;"></div>
+        <button class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="vizBuild()">🔨 Build Graph</button>
       </div>
 
-      <div class="card">
+      <!-- ALGORITHM + CONTROLS -->
+      <div class="card" style="padding:16px;margin-top:0;">
         <div class="card-title">Algorithm</div>
-        <label>Select Algorithm</label>
-        <select id="vizAlgo">
-          <option value="brute">Brute Force (Exact)</option>
-          <option value="local">Local Search (Greedy)</option>
+        <select id="vizAlgo" onchange="vizAlgoChanged()">
+          <option value="brute">Brute Force — Exact O(2ⁿ)</option>
+          <option value="local">Local Search — Greedy ½-approx</option>
         </select>
 
-        <div class="controls-row" style="flex-direction:column;align-items:stretch;gap:8px;margin-top:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px;">
           <button class="btn btn-primary" id="vizPlayBtn" onclick="vizPlay()">▶ Play</button>
           <button class="btn btn-secondary" id="vizPauseBtn" onclick="vizPause()" disabled>⏸ Pause</button>
           <button class="btn btn-secondary" id="vizStepBtn" onclick="vizStepFn()">⏭ Step</button>
@@ -1334,70 +1506,159 @@ table.edu-table tr:hover td { background: var(--bg3); }
         </div>
 
         <div class="slider-wrap" style="margin-top:12px;">
-          Speed: <input type="range" id="vizSpeed" min="1" max="10" value="5">
+          Speed:&nbsp;<input type="range" id="vizSpeed" min="1" max="10" value="5">
         </div>
       </div>
 
-      <div class="card">
+      <!-- LEGEND -->
+      <div class="card" style="padding:14px;margin-top:0;">
         <div class="card-title">Legend</div>
-        <div class="graph-legend" style="flex-direction:column;gap:8px;">
-          <span><span class="legend-dot" style="background:var(--set-a)"></span>Set S (blue side)</span>
-          <span><span class="legend-dot" style="background:var(--set-b)"></span>Set T (red side)</span>
-          <span><span class="legend-dot" style="background:var(--cut-edge);width:24px;height:4px;border-radius:2px;"></span>Cut edge</span>
-          <span><span class="legend-dot" style="background:var(--uncut-edge);width:24px;height:4px;border-radius:2px;"></span>Internal edge</span>
-          <span><span class="legend-dot" style="background:var(--yellow)"></span>Currently checked</span>
+        <div class="graph-legend" style="flex-direction:column;gap:7px;font-size:12px;">
+          <span><span class="legend-dot" style="background:var(--set-a)"></span>Set S — blue side</span>
+          <span><span class="legend-dot" style="background:var(--set-b)"></span>Set T — red side</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:22px;height:3px;background:var(--cut-edge);border-radius:2px;"></span>Cut edge (crosses)</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:22px;height:3px;background:#334155;border-radius:2px;"></span>Internal edge</span>
+          <span><span class="legend-dot" style="background:var(--yellow)"></span>Vertex under evaluation</span>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT: Visualization -->
+    <!-- ===================== MIDDLE: Graph ===================== -->
     <div class="viz-main">
-      <div class="graph-container" style="margin-bottom:14px;">
-        <svg id="vizSVG" viewBox="0 0 600 340" width="100%" height="340"></svg>
+      <!-- Graph canvas -->
+      <div class="graph-container" style="margin-bottom:12px;background:#060a14;">
+        <svg id="vizSVG" viewBox="0 0 580 320" width="100%" height="320"></svg>
       </div>
 
-      <div class="stats-row">
+      <!-- Stats row -->
+      <div class="stats-row" style="gap:8px;">
         <div class="stat-badge"><span class="sval" id="vstat-step">0</span><span class="slbl">Step</span></div>
         <div class="stat-badge"><span class="sval" id="vstat-cut">0</span><span class="slbl">Cut Size</span></div>
         <div class="stat-badge"><span class="sval" id="vstat-best">0</span><span class="slbl">Best Cut</span></div>
         <div class="stat-badge"><span class="sval" id="vstat-evals">0</span><span class="slbl">Evaluations</span></div>
       </div>
 
-      <div class="step-explain" id="vizExplain">
-        <div class="step-num">Ready</div>
-        Build a graph and select an algorithm to begin.
+      <!-- Rich step explanation -->
+      <div class="viz-explain-rich" style="margin-top:12px;" id="vizExplainBox">
+        <div class="ver-header">
+          <span class="ver-label">Algorithm Step</span>
+          <span id="vStepTag" class="badge badge-blue">—</span>
+        </div>
+        <div class="ver-body" id="vizExplain">
+          Select an algorithm and click <strong>Play</strong> or <strong>Step</strong> to begin.
+        </div>
+        <div class="ver-why" id="vizWhyBox" style="display:none;"></div>
       </div>
 
-      <div class="partition-display">
+      <!-- Edge-level trace -->
+      <div class="card" style="padding:14px;margin-top:0;">
+        <div class="card-title" style="margin-bottom:6px;">Edge Detail — Current Partition</div>
+        <div id="vizEdgeTrace" class="edge-trace-list">
+          <span style="color:var(--text3);font-size:12px;">Build a graph to see edge detail.</span>
+        </div>
+      </div>
+
+      <!-- Partition display -->
+      <div class="partition-display" style="margin-top:0;">
         <div class="part-side side-a">
-          <div class="side-label">Set S</div>
+          <div class="side-label">Set S (blue)</div>
           <div class="side-verts" id="vpartA">—</div>
         </div>
         <div class="part-side side-b">
-          <div class="side-label">Set T</div>
+          <div class="side-label">Set T (red)</div>
           <div class="side-verts" id="vpartB">—</div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Preset explanations -->
-  <h2 class="section-h2">Preset Graph Notes</h2>
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title">Triangle (K₃)</div>
-      <p>3 vertices, 3 edges. Maximum cut = 2. Any partition of 3 vertices must put 2 on one side and 1 on the other, giving 2 cut edges. Local search finds this immediately.</p>
-      <div class="box-tip"><div class="box-label">Learning Point</div>On K₃, local search finds the exact optimum in 1–2 iterations.</div>
-    </div>
-    <div class="card">
-      <div class="card-title">Square + Diagonals</div>
-      <p>4 vertices (K₄), 6 edges. Maximum cut = 4. Any balanced partition (2+2) cuts exactly 4 edges in K₄. Local search reliably reaches this.</p>
-      <div class="box-tip"><div class="box-label">Learning Point</div>Dense graphs often allow local search to reach the global optimum.</div>
-    </div>
-    <div class="card">
-      <div class="card-title">Petersen-like (6 vertices)</div>
-      <p>6 vertices, sparser edges. Demonstrates a case where local search may stabilize at a non-optimal local maximum depending on the initial partition.</p>
-      <div class="box-warn"><div class="box-label">Learning Point</div>Local search outcome depends on starting point — not always optimal.</div>
+    <!-- ===================== RIGHT: Teaching panel ===================== -->
+    <div class="viz-teaching">
+
+      <!-- Pseudocode trace panel -->
+      <div class="pseudo-trace-panel">
+        <div class="pt-header">
+          <span class="pt-title">Pseudocode Trace</span>
+          <span class="pt-badge" id="vzAlgoBadge">Brute Force</span>
+        </div>
+
+        <!-- Brute-force pseudocode (shown/hidden by JS) -->
+        <div id="vzPseudoBrute">
+          <span class="viz-pseudo-line vpl-done" id="vzb0"><span class="vpl-kw">function</span> BruteForceMaxCut(G):</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb1">  max_cut ← 0</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb2">  best_mask ← 0</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb3">  <span class="vpl-kw">for</span> mask ← 0 <span class="vpl-kw">to</span> 2ⁿ − 1:</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb4">    S ← {v : bit(mask,v) = 1}</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb5">    T ← V \ S</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb6">    cut ← |{(u,v)∈E: u∈S, v∈T}|</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb7">    <span class="vpl-kw">if</span> cut > max_cut:</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb8">      max_cut ← cut</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb9">      best_mask ← mask</span>
+          <span class="viz-pseudo-line vpl-done" id="vzb10">  <span class="vpl-kw">return</span> best_mask, max_cut</span>
+        </div>
+
+        <!-- Local-search pseudocode (hidden initially) -->
+        <div id="vzPseudoLocal" style="display:none;">
+          <span class="viz-pseudo-line vpl-done" id="vzl0"><span class="vpl-kw">function</span> LocalSearchMaxCut(G):</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl1">  S ← random partition</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl2">  improved ← <span class="vpl-kw">true</span></span>
+          <span class="viz-pseudo-line vpl-done" id="vzl3">  <span class="vpl-kw">while</span> improved:</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl4">    improved ← <span class="vpl-kw">false</span></span>
+          <span class="viz-pseudo-line vpl-done" id="vzl5">    <span class="vpl-kw">for each</span> v ∈ V:</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl6">      dS ← neighbors of v in same side</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl7">      dT ← neighbors of v in other side</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl8">      gain ← dS − dT</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl9">      <span class="vpl-kw">if</span> gain > 0:</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl10">        flip v to other side</span>
+          <span class="viz-pseudo-line vpl-done" id="vzl11">        improved ← <span class="vpl-kw">true</span></span>
+          <span class="viz-pseudo-line vpl-done" id="vzl12">  <span class="vpl-kw">return</span> S, cutSize(S)</span>
+        </div>
+
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--text3);display:flex;align-items:center;gap:8px;">
+            <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:rgba(59,130,246,0.22);border-left:3px solid #3b82f6;flex-shrink:0;"></span>
+            Now Executing — highlighted line
+          </div>
+        </div>
+      </div>
+
+      <!-- Line meaning box -->
+      <div class="card" style="padding:14px;">
+        <div class="card-title">Current Line Meaning</div>
+        <div id="vzLineMeaning" style="font-size:13px;color:var(--text2);line-height:1.65;min-height:60px;">
+          —
+        </div>
+      </div>
+
+      <!-- Algorithm info box -->
+      <div class="card" style="padding:14px;margin-top:0;" id="vzAlgoInfoBox">
+        <div class="card-title" id="vzAlgoInfoTitle">Brute Force</div>
+        <div id="vzAlgoInfoBody" style="font-size:13px;color:var(--text2);line-height:1.65;">
+          Tries all 2ⁿ subsets. Guaranteed to find the global maximum. Exponential time: O(2ⁿ · |E|). Practical only for n ≤ 15.
+        </div>
+      </div>
+
+    </div><!-- end viz-teaching -->
+  </div><!-- end viz-layout -->
+
+  <!-- Preset notes — secondary, pushed below -->
+  <div class="preset-notes-section">
+    <h2 class="section-h2" style="color:var(--text3);border-color:#1e293b;">Preset Graph Notes</h2>
+    <div class="grid-3">
+      <div class="card" style="opacity:0.85;">
+        <div class="card-title">Triangle (K₃)</div>
+        <p>3 vertices, 3 edges. Maximum cut = 2. Any partition puts 2 on one side and 1 on the other, giving 2 cut edges. Local search finds the optimum in 1–2 iterations.</p>
+        <div class="box-tip"><div class="box-label">Learning Point</div>On K₃, local search always reaches the exact optimum.</div>
+      </div>
+      <div class="card" style="opacity:0.85;">
+        <div class="card-title">Square + Diagonals (K₄)</div>
+        <p>4 vertices, 6 edges. Maximum cut = 4. Any balanced 2+2 partition cuts exactly 4 edges in K₄. Local search reliably reaches this.</p>
+        <div class="box-tip"><div class="box-label">Learning Point</div>Dense symmetric graphs often let local search reach the global optimum.</div>
+      </div>
+      <div class="card" style="opacity:0.85;">
+        <div class="card-title">Petersen-like (6 vertices)</div>
+        <p>6 vertices, sparser edges. Local search may stabilize at a non-optimal local maximum depending on the initial partition.</p>
+        <div class="box-warn"><div class="box-label">Learning Point</div>The starting partition matters — local search is not always optimal.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -2219,119 +2480,222 @@ function highlightLocal(id) {
 }
 
 /* ============================================================
-   VISUALIZER SECTION
+   VISUALIZER SECTION — ENHANCED
+   Handles: structured edge input, pseudocode trace, rich
+   explanation panel, edge-level detail, line highlighting,
+   and full sync between Play/Step and pseudocode.
    ============================================================ */
 let vizInitialized = false;
 let vizGraph = {vertices: [], edges: []};
 let vizState = {};
 let vizTimer = null;
 
+/* ---- Preset graph definitions ---- */
 const PRESETS = {
-  triangle: {
-    n: 3,
-    edges: '0 1\n1 2\n2 0',
-    vertices: [{id:0,label:'A',x:300,y:70},{id:1,label:'B',x:170,y:270},{id:2,label:'C',x:430,y:270}]
-  },
   square: {
     n: 4,
-    edges: '0 1\n1 2\n2 3\n3 0\n0 2\n1 3',
-    vertices: [{id:0,label:'A',x:180,y:90},{id:1,label:'B',x:420,y:90},{id:2,label:'C',x:420,y:270},{id:3,label:'D',x:180,y:270}]
+    edgePairs: [[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]],
+    vertices: [
+      {id:0,label:'A',x:160,y:85},{id:1,label:'B',x:420,y:85},
+      {id:2,label:'C',x:420,y:255},{id:3,label:'D',x:160,y:255}
+    ]
+  },
+  triangle: {
+    n: 3,
+    edgePairs: [[0,1],[1,2],[2,0]],
+    vertices: [
+      {id:0,label:'A',x:290,y:65},{id:1,label:'B',x:145,y:280},{id:2,label:'C',x:435,y:280}
+    ]
   },
   petersen: {
     n: 6,
-    edges: '0 1\n1 2\n2 3\n3 0\n0 4\n1 4\n2 5\n3 5\n4 5',
+    edgePairs: [[0,1],[1,2],[2,3],[3,0],[0,4],[1,4],[2,5],[3,5],[4,5]],
     vertices: [
-      {id:0,label:'A',x:180,y:80},{id:1,label:'B',x:420,y:80},{id:2,label:'C',x:460,y:240},{id:3,label:'D',x:140,y:240},
-      {id:4,label:'E',x:240,y:170},{id:5,label:'F',x:360,y:170}
+      {id:0,label:'A',x:165,y:75},{id:1,label:'B',x:415,y:75},
+      {id:2,label:'C',x:460,y:240},{id:3,label:'D',x:120,y:240},
+      {id:4,label:'E',x:225,y:170},{id:5,label:'F',x:355,y:170}
     ]
   }
 };
 
-function initViz() {
-  vizInitialized = true;
-  vizLoadPreset();
+/* ---- Pseudocode line-to-meaning map ---- */
+const VZ_LINE_MEANING = {
+  brute: {
+    vzb0: 'Entry point: we will test every possible partition of the vertex set.',
+    vzb1: 'Initialize max_cut to 0. We have not found any cut yet.',
+    vzb2: 'Remember which bitmask gave the best cut (starts at 0).',
+    vzb3: 'Outer loop: mask runs from 0 to 2ⁿ−1, covering every subset S.',
+    vzb4: 'Decode mask: vertices with bit=1 go into set S.',
+    vzb5: 'All remaining vertices (bit=0) go into set T = V \\ S.',
+    vzb6: 'Count edges where one endpoint is in S and the other is in T.',
+    vzb7: 'Compare this partition\'s cut size to the current best.',
+    vzb8: 'New best found — update max_cut with this larger value.',
+    vzb9: 'Record which mask (partition) produced the new best.',
+    vzb10:'All partitions evaluated. Return the best mask and cut size.'
+  },
+  local: {
+    vzl0: 'Entry point: greedy local-search max-cut algorithm.',
+    vzl1: 'Start with an arbitrary initial partition (e.g. alternating vertices).',
+    vzl2: 'Set improved=true so the while loop runs at least once.',
+    vzl3: 'Keep iterating as long as some flip improved the cut in the last pass.',
+    vzl4: 'Assume no improvement this pass — will be set true if a flip occurs.',
+    vzl5: 'Consider each vertex v in turn as a candidate to flip.',
+    vzl6: 'Count v\'s neighbors that are on the SAME side as v (dS).',
+    vzl7: 'Count v\'s neighbors that are on the OTHER side (dT).',
+    vzl8: 'Gain = dS − dT: how much the cut improves if v is flipped.',
+    vzl9: 'Only flip if gain > 0 (strictly improves the cut).',
+    vzl10:'Move v to the opposite partition side.',
+    vzl11:'Mark that an improvement happened — continue scanning.',
+    vzl12:'No vertex could be improved in the last full pass. Local maximum reached.'
+  }
+};
+
+/* ---- Edge builder (structured input) ---- */
+function vizInitEdgeBuilder(pairs) {
+  const container = document.getElementById('edgeBuilder');
+  container.innerHTML = '';
+  pairs.forEach(([u,v]) => vizAddEdgeRowWith(u, v));
 }
 
+function vizAddEdgeRow() {
+  vizAddEdgeRowWith('', '');
+}
+
+function vizAddEdgeRowWith(u, v) {
+  const n = parseInt(document.getElementById('vizN').value) || 12;
+  const container = document.getElementById('edgeBuilder');
+  const row = document.createElement('div');
+  row.className = 'edge-row';
+  row.innerHTML = `
+    <input type="number" min="0" max="${n-1}" value="${u}" placeholder="u" style="width:54px;margin:0;text-align:center;padding:6px 4px;">
+    <span class="edge-row-sep">→</span>
+    <input type="number" min="0" max="${n-1}" value="${v}" placeholder="v" style="width:54px;margin:0;text-align:center;padding:6px 4px;">
+    <button class="edge-remove-btn" onclick="this.parentElement.remove();document.getElementById('vizPreset').value='custom';" title="Remove">✕</button>
+  `;
+  container.appendChild(row);
+}
+
+function vizOnNChange() {
+  document.getElementById('vizPreset').value = 'custom';
+}
+
+function vizGetEdgesFromBuilder() {
+  const rows = document.querySelectorAll('#edgeBuilder .edge-row');
+  const edges = [];
+  const n = parseInt(document.getElementById('vizN').value);
+  const err = document.getElementById('vizError');
+  err.textContent = '';
+  for (const row of rows) {
+    const inputs = row.querySelectorAll('input[type=number]');
+    const u = parseInt(inputs[0].value);
+    const v = parseInt(inputs[1].value);
+    if (isNaN(u) || isNaN(v)) { err.textContent = 'All edge fields must have numeric values.'; return null; }
+    if (u < 0 || v < 0 || u >= n || v >= n) {
+      err.textContent = `Edge ${u}–${v}: vertex indices must be 0 to ${n-1}.`; return null;
+    }
+    if (u === v) { err.textContent = `Self-loop (${u}–${u}) is not allowed.`; return null; }
+    edges.push({u, v});
+  }
+  return edges;
+}
+
+/* ---- Layout helpers ---- */
+function layoutCircle(n, cx, cy, r) {
+  const labels = 'ABCDEFGHIJKL'.split('');
+  return Array.from({length:n}, (_, i) => {
+    const angle = (2*Math.PI*i/n) - Math.PI/2;
+    return {id:i, label:labels[i], x:cx+r*Math.cos(angle), y:cy+r*Math.sin(angle)};
+  });
+}
+
+/* ---- Preset loading ---- */
 function vizLoadPreset() {
   const sel = document.getElementById('vizPreset').value;
   if (sel === 'custom') return;
   const p = PRESETS[sel];
   document.getElementById('vizN').value = p.n;
-  document.getElementById('vizEdges').value = p.edges;
+  vizInitEdgeBuilder(p.edgePairs);
   vizBuild();
 }
 
+/* ---- Build graph from current UI ---- */
 function vizBuild() {
   document.getElementById('vizError').textContent = '';
   const n = parseInt(document.getElementById('vizN').value);
   if (isNaN(n) || n < 2 || n > 12) {
-    document.getElementById('vizError').textContent = 'Vertices must be between 2 and 12.';
-    return;
+    document.getElementById('vizError').textContent = 'Vertices must be between 2 and 12.'; return;
   }
+  const edges = vizGetEdgesFromBuilder();
+  if (edges === null) return;
 
-  const edgeText = document.getElementById('vizEdges').value.trim();
-  const edges = [];
-  const edgeLines = edgeText.split('\n').filter(l => l.trim());
-  for (const line of edgeLines) {
-    const parts = line.trim().split(/\s+/);
-    if (parts.length !== 2) { document.getElementById('vizError').textContent = `Invalid edge: "${line}"`; return; }
-    const u = parseInt(parts[0]), v = parseInt(parts[1]);
-    if (isNaN(u) || isNaN(v) || u < 0 || v < 0 || u >= n || v >= n) {
-      document.getElementById('vizError').textContent = `Edge "${line}" has invalid vertices (must be 0 to ${n-1}).`;
-      return;
-    }
-    if (u === v) { document.getElementById('vizError').textContent = `Self-loop not allowed: "${line}".`; return; }
-    edges.push({u, v});
-  }
-
-  // Try to use preset layout if matching
   const sel = document.getElementById('vizPreset').value;
   let vertices;
   if (sel !== 'custom' && PRESETS[sel] && PRESETS[sel].n === n) {
     vertices = PRESETS[sel].vertices;
   } else {
-    vertices = layoutCircle(n, 300, 170, 130);
+    vertices = layoutCircle(n, 290, 160, 125);
   }
 
   vizGraph = {vertices, edges};
+  vizUpdateEdgeTrace(Array.from({length:n},()=>0));
   vizReset();
 }
 
-function layoutCircle(n, cx, cy, r) {
-  const verts = [];
-  const labels = 'ABCDEFGHIJKL'.split('');
-  for (let i = 0; i < n; i++) {
-    const angle = (2 * Math.PI * i / n) - Math.PI/2;
-    verts.push({id:i, label:labels[i], x: cx + r*Math.cos(angle), y: cy + r*Math.sin(angle)});
-  }
-  return verts;
-}
-
-function vizReset() {
-  clearInterval(vizTimer);
-  vizTimer = null;
-  const n = vizGraph.vertices.length;
-  // initial partition: alternating
-  const partition = Array.from({length: n}, (_, i) => i % 2);
+/* ---- Algorithm selector change ---- */
+function vizAlgoChanged() {
   const algo = document.getElementById('vizAlgo').value;
-
-  vizState = {
-    algo, n, partition: [...partition],
-    running: false, done: false,
-    // brute force
-    mask: 0, bestCut: 0, bestMask: 0,
-    // local search
-    vi: 0, improved: true, totalFlips: 0, totalIter: 1, phase: 'scan'
-  };
-  document.getElementById('vizPlayBtn').disabled = false;
-  document.getElementById('vizPauseBtn').disabled = true;
-  document.getElementById('vizStepBtn').disabled = false;
-
-  drawViz(partition, -1);
-  setVizStats(0, 0, 0, 0);
-  document.getElementById('vizExplain').innerHTML = '<div class="step-num">Ready</div>Click Play or Step to start.';
+  document.getElementById('vzPseudoBrute').style.display = (algo === 'brute') ? '' : 'none';
+  document.getElementById('vzPseudoLocal').style.display = (algo === 'local') ? '' : 'none';
+  document.getElementById('vzAlgoBadge').textContent = (algo === 'brute') ? 'Brute Force' : 'Local Search';
+  document.getElementById('vzAlgoInfoTitle').textContent = (algo === 'brute') ? 'Brute Force' : 'Local Search';
+  document.getElementById('vzAlgoInfoBody').textContent = (algo === 'brute')
+    ? 'Tries all 2ⁿ subsets. Guaranteed to find the global maximum. Exponential time: O(2ⁿ · |E|). Practical only for n ≤ 15.'
+    : 'Iteratively flips vertices to improve cut size. Terminates at a local maximum. Polynomial time: O(|E|²). Guarantees ≥ OPT/2.';
+  vizClearPseudoHighlight();
+  vizReset();
 }
 
+/* ---- Pseudocode highlight helpers ---- */
+function vizClearPseudoHighlight() {
+  document.querySelectorAll('.viz-pseudo-line').forEach(el => el.classList.remove('vpl-active'));
+}
+
+function vizHighlightLine(id) {
+  vizClearPseudoHighlight();
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('vpl-active');
+    el.scrollIntoView({block:'nearest', behavior:'smooth'});
+  }
+  // Update line meaning
+  const algo = vizState.algo || document.getElementById('vizAlgo').value;
+  const meaning = (algo === 'brute' ? VZ_LINE_MEANING.brute : VZ_LINE_MEANING.local)[id];
+  document.getElementById('vzLineMeaning').textContent = meaning || '—';
+}
+
+/* ---- Edge trace update ---- */
+function vizUpdateEdgeTrace(partition) {
+  const container = document.getElementById('vizEdgeTrace');
+  const {vertices, edges} = vizGraph;
+  if (!vertices.length) return;
+  container.innerHTML = '';
+  edges.forEach(({u, v}) => {
+    const isCut = partition[u] !== partition[v];
+    const item = document.createElement('div');
+    item.className = 'edge-trace-item';
+    const uL = vertices[u].label, vL = vertices[v].label;
+    const uSide = partition[u] === 0 ? 'S' : 'T';
+    const vSide = partition[v] === 0 ? 'S' : 'T';
+    item.innerHTML = `
+      <span class="et-dot ${isCut?'et-cut':'et-nocut'}"></span>
+      <span style="color:${isCut?'#6ee7b7':'#64748b'}">${uL}–${vL}</span>
+      <span style="color:var(--text3);font-size:11px;">${uL}∈${uSide}, ${vL}∈${vSide} → ${isCut?'<span style="color:#10b981">✓ cut</span>':'<span style="color:#475569">internal</span>'}</span>
+    `;
+    container.appendChild(item);
+  });
+}
+
+/* ---- Draw viz graph ---- */
 function drawViz(partition, activeV) {
   const svg = document.getElementById('vizSVG');
   if (!svg) return;
@@ -2339,6 +2703,7 @@ function drawViz(partition, activeV) {
   const {S, T} = partitionDisplay(partition, vizGraph.vertices);
   document.getElementById('vpartA').textContent = S.join(', ') || '∅';
   document.getElementById('vpartB').textContent = T.join(', ') || '∅';
+  vizUpdateEdgeTrace(partition);
 }
 
 function setVizStats(step, cut, best, evals) {
@@ -2348,61 +2713,196 @@ function setVizStats(step, cut, best, evals) {
   document.getElementById('vstat-evals').textContent = evals;
 }
 
+/* ---- Rich explain helper ---- */
+function vizSetExplain(stepTag, body, why) {
+  document.getElementById('vStepTag').textContent = stepTag;
+  document.getElementById('vizExplain').innerHTML = body;
+  const whyBox = document.getElementById('vizWhyBox');
+  if (why) { whyBox.style.display=''; whyBox.innerHTML = '💡 ' + why; }
+  else { whyBox.style.display='none'; }
+}
+
+/* ---- Reset ---- */
+function vizReset() {
+  clearInterval(vizTimer);
+  vizTimer = null;
+  const n = vizGraph.vertices.length;
+  if (!n) return;
+  const algo = document.getElementById('vizAlgo').value;
+  const partition = Array.from({length:n}, (_,i) => i%2);
+
+  vizState = {
+    algo, n, partition: [...partition],
+    running: false, done: false,
+    mask: 0, bestCut: 0, bestMask: 0,
+    vi: 0, improved: true, totalFlips: 0, totalIter: 1, phase:'scan'
+  };
+  document.getElementById('vizPlayBtn').disabled = false;
+  document.getElementById('vizPauseBtn').disabled = true;
+  document.getElementById('vizStepBtn').disabled = false;
+  vizClearPseudoHighlight();
+  drawViz(partition, -1);
+  setVizStats(0, 0, 0, 0);
+  vizSetExplain('Ready', 'Click <strong>Play</strong> or <strong>Step</strong> to begin.', null);
+  document.getElementById('vzLineMeaning').textContent = '—';
+}
+
+/* ---- Dispatch step ---- */
 function vizDoStep() {
   if (vizState.done) return;
   if (vizState.algo === 'brute') vizBruteStep();
   else vizLocalStep();
 }
 
+/* ---- Brute force step ---- */
 function vizBruteStep() {
-  const {n, edges, vertices} = {...vizGraph, n: vizGraph.vertices.length};
+  const {n} = vizState;
   const total = Math.pow(2, n);
+  const {vertices, edges} = vizGraph;
+
   if (vizState.mask >= total) { vizDone(); return; }
+
   const mask = vizState.mask;
   const partition = maskToPartition(mask, n);
-  const cut = computeCutSize(vizGraph.edges, partition);
+  const cut = computeCutSize(edges, partition);
+  const isNew = cut > vizState.bestCut;
   vizState.mask++;
-  if (cut > vizState.bestCut) { vizState.bestCut = cut; vizState.bestMask = mask; }
+
+  if (isNew) { vizState.bestCut = cut; vizState.bestMask = mask; }
+
   drawViz(partition, -1);
   setVizStats(vizState.mask, cut, vizState.bestCut, vizState.mask);
-  document.getElementById('vizExplain').innerHTML = `<div class="step-num">Brute Force: Partition ${vizState.mask} of ${total}</div>
-    Mask <code>${mask.toString(2).padStart(n,'0')}</code> → Cut size = <strong>${cut}</strong>. Best so far = <strong>${vizState.bestCut}</strong>.`;
+
+  // Pseudocode sync
+  if (mask === 0) {
+    vizHighlightLine('vzb1');
+  } else if (mask < 3) {
+    vizHighlightLine('vzb3');
+  } else {
+    if (isNew) vizHighlightLine('vzb7');
+    else       vizHighlightLine('vzb6');
+  }
+
+  // Build detailed explanation
+  const {S, T} = partitionDisplay(partition, vertices);
+  const binMask = mask.toString(2).padStart(n,'0');
+  const cutEdges = edges.filter(({u,v}) => partition[u]!==partition[v])
+                        .map(({u,v}) => `${vertices[u].label}–${vertices[v].label}`);
+  const nonCutEdges = edges.filter(({u,v}) => partition[u]===partition[v])
+                           .map(({u,v}) => `${vertices[u].label}–${vertices[v].label}`);
+
+  const body = `
+    <span style="font-family:monospace;color:#93c5fd;">Mask ${binMask}</span> → 
+    S = {${S.join(', ')||'∅'}}, T = {${T.join(', ')||'∅'}}<br>
+    <span style="color:#6ee7b7;">✓ Cut edges (${cutEdges.length}):</span> ${cutEdges.join(', ')||'none'}<br>
+    <span style="color:#475569;">✕ Internal edges (${nonCutEdges.length}):</span> ${nonCutEdges.join(', ')||'none'}<br>
+    Cut size = <strong style="color:${isNew?'#10b981':'#e2e8f0'}">${cut}</strong>
+    ${isNew ? ' &nbsp;<span style="color:#10b981">🆕 New best!</span>' : ` &nbsp;(best remains <strong>${vizState.bestCut}</strong>)`}
+  `;
+  const why = isNew
+    ? `This partition produces more cut edges than any previously seen. best_mask updated to ${binMask}.`
+    : `Cut ${cut} does not exceed the current best of ${vizState.bestCut}. No update.`;
+
+  vizSetExplain(`Partition ${vizState.mask}/${total}`, body, why);
+
   if (vizState.mask >= total) vizDone();
 }
 
+/* ---- Local search step ---- */
 function vizLocalStep() {
   const {vertices, edges} = vizGraph;
-  const n = vizGraph.vertices.length;
+  const n = vizState.n;
   const vi = vizState.vi;
-  const gain = computeGain(vi, vizState.partition, edges);
-  const cut = computeCutSize(edges, vizState.partition);
   const vLabel = vertices[vi].label;
+  const curSide = vizState.partition[vi] === 0 ? 'S' : 'T';
+
+  // Compute same/other counts explicitly for display
+  let dS = 0, dT = 0;
+  edges.forEach(({u,v}) => {
+    if (u===vi||v===vi) {
+      const nbr = u===vi?v:u;
+      if (vizState.partition[nbr]===vizState.partition[vi]) dS++;
+      else dT++;
+    }
+  });
+  const gain = dS - dT;
+
+  const cutBefore = computeCutSize(edges, vizState.partition);
   drawViz(vizState.partition, vi);
-  const step = (vizState.totalIter - 1) * n + vizState.vi + 1;
-  setVizStats(step, cut, Math.max(cut, vizState.bestCut||0), step);
+
+  const step = (vizState.totalIter-1)*n + vi + 1;
+  setVizStats(step, cutBefore, Math.max(cutBefore, vizState.bestCut||0), step);
+
+  // Neighbor detail
+  const sameNbrs = [], otherNbrs = [];
+  edges.forEach(({u,v}) => {
+    if (u===vi||v===vi) {
+      const nbr = u===vi?v:u;
+      const nl = vertices[nbr].label;
+      if (vizState.partition[nbr]===vizState.partition[vi]) sameNbrs.push(nl);
+      else otherNbrs.push(nl);
+    }
+  });
 
   if (gain > 0) {
+    // Flip
+    vizHighlightLine('vzl10');
     vizState.partition[vi] ^= 1;
     vizState.improved = true;
     vizState.totalFlips++;
-    const newCut = computeCutSize(edges, vizState.partition);
-    vizState.bestCut = Math.max(vizState.bestCut||0, newCut);
-    document.getElementById('vizExplain').innerHTML = `<div class="step-num">Local Search — Iter ${vizState.totalIter}, Vertex ${vLabel}</div>
-      Gain = +${gain}. Flipped vertex <strong>${vLabel}</strong>. New cut size = <strong>${newCut}</strong>.`;
+    vizState.bestCut = Math.max(vizState.bestCut||0, computeCutSize(edges, vizState.partition));
+    const cutAfter = computeCutSize(edges, vizState.partition);
+    const newSide = vizState.partition[vi]===0?'S':'T';
+
+    vizSetExplain(
+      `Iter ${vizState.totalIter}, Vertex ${vLabel} — FLIP`,
+      `Vertex <strong style="color:#fde68a">${vLabel}</strong> was in ${curSide}.<br>
+       Same-side neighbors: {${sameNbrs.join(',')||'none'}} (dS = ${dS})<br>
+       Other-side neighbors: {${otherNbrs.join(',')||'none'}} (dT = ${dT})<br>
+       Gain = dS − dT = <strong style="color:#10b981">+${gain}</strong> &gt; 0 → flip accepted.<br>
+       Cut: <strong>${cutBefore}</strong> → <strong style="color:#10b981">${cutAfter}</strong>`,
+      `Moving ${vLabel} from ${curSide} to ${newSide} adds ${dS} new cut edges and removes ${dT}, net gain +${gain}.`
+    );
   } else {
-    document.getElementById('vizExplain').innerHTML = `<div class="step-num">Local Search — Iter ${vizState.totalIter}, Vertex ${vLabel}</div>
-      Gain = ${gain}. No flip for vertex <strong>${vLabel}</strong>. Cut stays at <strong>${cut}</strong>.`;
+    // No flip
+    const lineId = gain === 0 ? 'vzl9' : 'vzl8';
+    vizHighlightLine(lineId);
+    const reason = gain < 0 ? 'Gain < 0 — flipping would reduce the cut.' : 'Gain = 0 — no net improvement; skip.';
+
+    vizSetExplain(
+      `Iter ${vizState.totalIter}, Vertex ${vLabel} — skip`,
+      `Vertex <strong>${vLabel}</strong> is in ${curSide}.<br>
+       Same-side neighbors: {${sameNbrs.join(',')||'none'}} (dS = ${dS})<br>
+       Other-side neighbors: {${otherNbrs.join(',')||'none'}} (dT = ${dT})<br>
+       Gain = dS − dT = <strong style="color:#f59e0b">${gain}</strong>. ${reason}<br>
+       Cut stays at <strong>${cutBefore}</strong>.`,
+      reason
+    );
   }
 
   vizState.vi++;
   if (vizState.vi >= n) {
-    if (!vizState.improved) { vizDone(); return; }
-    vizState.vi = 0;
-    vizState.improved = false;
-    vizState.totalIter++;
+    if (!vizState.improved) {
+      vizDone();
+      const finalCut = computeCutSize(edges, vizState.partition);
+      vizSetExplain(
+        'Local Maximum',
+        `No vertex could be flipped to improve the cut.<br>
+         Final cut size = <strong style="color:#10b981">${finalCut}</strong>.<br>
+         This is a <strong>local maximum</strong> — not necessarily global.`,
+        'The algorithm guarantees ≥ OPT/2. In this case OPT may be higher, but no single flip can reach it.'
+      );
+      vizHighlightLine('vzl12');
+    } else {
+      vizState.vi = 0;
+      vizState.improved = false;
+      vizState.totalIter++;
+      vizHighlightLine('vzl3');
+    }
   }
 }
 
+/* ---- Done ---- */
 function vizDone() {
   vizState.done = true;
   clearInterval(vizTimer);
@@ -2410,17 +2910,16 @@ function vizDone() {
   document.getElementById('vizPlayBtn').disabled = true;
   document.getElementById('vizPauseBtn').disabled = true;
   document.getElementById('vizStepBtn').disabled = true;
-  const finalCut = computeCutSize(vizGraph.edges, vizState.partition);
-  document.getElementById('vizExplain').innerHTML += `<br><span style="color:var(--green)">✅ Algorithm complete. Final cut size = <strong>${finalCut}</strong>.</span>`;
 }
 
+/* ---- Play / Pause / Step ---- */
 function vizPlay() {
   if (vizState.done) return;
   vizState.running = true;
   document.getElementById('vizPlayBtn').disabled = true;
   document.getElementById('vizPauseBtn').disabled = false;
-  const speed = document.getElementById('vizSpeed').value;
-  const delay = Math.max(60, 1300 - speed * 120);
+  const speed = parseInt(document.getElementById('vizSpeed').value);
+  const delay = Math.max(60, 1300 - speed*120);
   vizTimer = setInterval(vizDoStep, delay);
 }
 function vizPause() {
@@ -2431,6 +2930,18 @@ function vizPause() {
   document.getElementById('vizPauseBtn').disabled = true;
 }
 function vizStepFn() { if (!vizState.done) vizDoStep(); }
+
+/* ---- Init (called when tab opens) ---- */
+function initViz() {
+  vizInitialized = true;
+  // Build default preset (square)
+  const p = PRESETS['square'];
+  document.getElementById('vizN').value = p.n;
+  vizInitEdgeBuilder(p.edgePairs);
+  // Show correct pseudocode block
+  vizAlgoChanged();
+  vizBuild();
+}
 
 /* ============================================================
    COMPARISON SECTION
