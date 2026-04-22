@@ -780,6 +780,127 @@ table.edu-table tr:hover td { background: var(--bg3); }
 .proof-skeleton .ps-section { color: #c4b5fd; font-weight: bold; }
 .proof-skeleton .ps-body    { color: var(--text2); padding-left: 20px; display: block; }
 
+/* ============================================================
+   TEACHING TABLES — Brute Force & Local Search panels
+   ============================================================ */
+.algo-teach-layout {
+  display: grid;
+  grid-template-columns: 1fr 370px;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+@media (max-width: 980px) { .algo-teach-layout { grid-template-columns: 1fr; } }
+
+.teach-panel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.teach-panel-header {
+  background: var(--bg4);
+  padding: 9px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.teach-panel-body { padding: 14px; }
+
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.cmp-table th {
+  background: var(--bg3);
+  color: var(--text3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.cmp-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #161f30;
+  color: var(--text2);
+  vertical-align: top;
+}
+.cmp-table tr:last-child td { border-bottom: none; }
+.cmp-table .row-label { color: var(--text3); font-size: 11px; font-family: var(--font-mono); white-space: nowrap; }
+.cmp-table .val-current { color: #93c5fd; font-family: var(--font-mono); font-weight: bold; }
+.cmp-table .val-best    { color: #6ee7b7; font-family: var(--font-mono); font-weight: bold; }
+.cmp-table .val-cand    { color: #fde68a; font-family: var(--font-mono); font-weight: bold; }
+
+.decision-badge { display: inline-block; padding: 2px 9px; border-radius: 10px; font-family: var(--font-mono); font-size: 11px; font-weight: bold; }
+.db-new  { background: #0a2318; color: #6ee7b7; border: 1px solid #10b981; }
+.db-rej  { background: #2e0a0a; color: #fca5a5; border: 1px solid #ef4444; }
+.db-tie  { background: #2c1f05; color: #fde68a; border: 1px solid #f59e0b; }
+.db-none { background: var(--bg3); color: var(--text3); border: 1px solid var(--border); }
+
+.edge-eval-table { width: 100%; border-collapse: collapse; font-size: 12px; font-family: var(--font-mono); }
+.edge-eval-table th { background: var(--bg3); color: var(--text3); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 6px 8px; text-align: left; }
+.edge-eval-table td { padding: 5px 8px; border-top: 1px solid #161f30; color: var(--text2); }
+.eet-cut   { color: #10b981; }
+.eet-nocut { color: #475569; }
+.eet-gain  { color: #10b981; font-weight: bold; }
+.eet-lose  { color: #ef4444; }
+.eet-same  { color: #64748b; }
+
+.bitmask-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+.bit-cell {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+  padding: 5px 7px; text-align: center; min-width: 46px; font-family: var(--font-mono); font-size: 12px;
+}
+.bit-cell .bc-lbl { color: var(--text3); font-size: 10px; }
+.bit-cell .bc-bit { font-size: 1rem; font-weight: bold; }
+.bit-cell .bc-set { font-size: 10px; margin-top: 1px; }
+.bit-cell.in-s { border-color: #1d4ed8; }
+.bit-cell.in-s .bc-bit { color: #93c5fd; }
+.bit-cell.in-s .bc-set { color: #93c5fd; }
+.bit-cell.in-t { border-color: #b91c1c; }
+.bit-cell.in-t .bc-bit { color: #fca5a5; }
+.bit-cell.in-t .bc-set { color: #fca5a5; }
+
+.history-log { font-family: var(--font-mono); font-size: 12px; max-height: 170px; overflow-y: auto; }
+.history-log::-webkit-scrollbar { width: 4px; }
+.history-log::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.history-entry { padding: 5px 8px; border-bottom: 1px solid #161f30; display: flex; align-items: baseline; gap: 8px; line-height: 1.4; }
+.he-num  { color: var(--text3); min-width: 26px; flex-shrink: 0; }
+.he-text { color: var(--text2); flex: 1; }
+
+.narrative-box {
+  background: #080c17;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+.narrative-box .nar-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent2);
+  display: block;
+  margin-bottom: 6px;
+}
+.narrative-box strong { color: #e2e8f0; }
+
+.stop-panel { background: #130f22; border: 1px solid var(--accent3); border-radius: var(--radius); padding: 16px 20px; display: none; margin-bottom: 14px; }
+.stop-panel.visible { display: block; }
+.stop-panel .sp-title { color: #c4b5fd; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+
 </style>
 </head>
 <body>
@@ -1268,66 +1389,128 @@ table.edu-table tr:hover td { background: var(--bg3); }
     </div>
   </div>
 
-  <h2 class="section-h2">Interactive Animation</h2>
-  <p>Use the controls below to step through the brute-force algorithm on a preset graph. Watch every partition being evaluated and observe the best solution update.</p>
+  <h2 class="section-h2">Interactive Teaching Animation</h2>
+  <p>Step through every partition. Every column, table, and narrative updates on each step — so you can see exactly what the algorithm is doing and why.</p>
 
-  <div id="bruteGraph" style="background:#0a0d18;border:1px solid var(--border);border-radius:var(--radius-lg);max-width:700px;margin-bottom:14px;">
-    <svg id="bruteSVG" viewBox="0 0 700 280" width="100%" height="280"></svg>
-  </div>
+  <!-- Top: graph + right-side panels -->
+  <div class="algo-teach-layout">
 
-  <div class="stats-row">
-    <div class="stat-badge"><span class="sval" id="bstat-mask">—</span><span class="slbl">Mask (binary)</span></div>
-    <div class="stat-badge"><span class="sval" id="bstat-cur">0</span><span class="slbl">Current Cut</span></div>
-    <div class="stat-badge"><span class="sval" id="bstat-best">0</span><span class="slbl">Best Cut</span></div>
-    <div class="stat-badge"><span class="sval" id="bstat-eval">0</span><span class="slbl">Partitions Tested</span></div>
-    <div class="stat-badge"><span class="sval" id="bstat-total">—</span><span class="slbl">Total Partitions</span></div>
-  </div>
-
-  <div class="controls-row">
-    <button class="btn btn-primary" id="bplay" onclick="brutePlay()">▶ Play</button>
-    <button class="btn btn-secondary" id="bpause" onclick="brutePause()" disabled>⏸ Pause</button>
-    <button class="btn btn-secondary" id="bstep" onclick="bruteStep()">⏭ Step</button>
-    <button class="btn btn-red" onclick="bruteReset()">↺ Reset</button>
-    <div class="slider-wrap">
-      Speed: <input type="range" id="bspeed" min="1" max="10" value="5"> <span id="bspeedlbl">5</span>
-    </div>
-  </div>
-
-  <div class="step-explain" id="bruteExplain">
-    <div class="step-num">Ready</div>
-    Click <strong>Play</strong> or <strong>Step</strong> to start the brute-force enumeration.
-  </div>
-
-  <div class="partition-display">
-    <div class="part-side side-a">
-      <div class="side-label">Set S (blue side)</div>
-      <div class="side-verts" id="bpartA">—</div>
-    </div>
-    <div class="part-side side-b">
-      <div class="side-label">Set T (red side)</div>
-      <div class="side-verts" id="bpartB">—</div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:20px;">
-    <div class="card-title">Best Partition Found So Far</div>
-    <div class="partition-display">
-      <div class="part-side side-a">
-        <div class="side-label">Best S</div>
-        <div class="side-verts" id="bBestA">—</div>
+    <!-- LEFT: graph + controls -->
+    <div>
+      <div id="bruteGraph" style="background:#060a14;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;">
+        <svg id="bruteSVG" viewBox="0 0 700 280" width="100%" height="280"></svg>
       </div>
-      <div class="part-side side-b">
-        <div class="side-label">Best T</div>
-        <div class="side-verts" id="bBestB">—</div>
+
+      <div class="stats-row" style="gap:8px;">
+        <div class="stat-badge"><span class="sval" id="bstat-mask" style="font-size:1rem;">—</span><span class="slbl">Binary Mask</span></div>
+        <div class="stat-badge"><span class="sval" id="bstat-cur">0</span><span class="slbl">Current Cut</span></div>
+        <div class="stat-badge"><span class="sval" id="bstat-best">0</span><span class="slbl">Best Cut</span></div>
+        <div class="stat-badge"><span class="sval" id="bstat-eval">0</span><span class="slbl">Tested</span></div>
+        <div class="stat-badge"><span class="sval" id="bstat-total">—</span><span class="slbl">Total</span></div>
+      </div>
+
+      <div class="controls-row" style="margin-top:10px;">
+        <button class="btn btn-primary" id="bplay" onclick="brutePlay()">▶ Play</button>
+        <button class="btn btn-secondary" id="bpause" onclick="brutePause()" disabled>⏸ Pause</button>
+        <button class="btn btn-secondary" id="bstep" onclick="bruteStep()">⏭ Step</button>
+        <button class="btn btn-red" onclick="bruteReset()">↺ Reset</button>
+        <div class="slider-wrap">Speed: <input type="range" id="bspeed" min="1" max="10" value="5"> <span id="bspeedlbl">5</span></div>
+      </div>
+
+      <!-- Narrative box -->
+      <div class="narrative-box" id="bruteNarrative" style="margin-top:14px;">
+        <span class="nar-label">What is happening right now</span>
+        Click <strong>Step</strong> or <strong>Play</strong> to begin. Brute force will test every possible partition one at a time.
+      </div>
+
+      <!-- Bitmask decoder -->
+      <div class="teach-panel" style="margin-bottom:14px;">
+        <div class="teach-panel-header">Bitmask → Partition Translation</div>
+        <div class="teach-panel-body">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:6px;">Each bit in the mask tells us which set a vertex belongs to. Bit = 1 → Set S (blue). Bit = 0 → Set T (red).</div>
+          <div id="bruteBitmaskDecoder" class="bitmask-row" style="min-height:50px;">
+            <span style="color:var(--text3);font-size:12px;">Waiting for first step…</span>
+          </div>
+          <div id="bruteBitmaskSummary" style="font-size:13px;color:var(--text2);margin-top:6px;"></div>
+        </div>
       </div>
     </div>
-    <div style="font-size:13px;color:var(--text2);margin-top:6px;">Best cut size: <span style="color:var(--green);font-family:monospace;font-size:1.1rem;" id="bBestCutDisp">0</span></div>
+
+    <!-- RIGHT: comparison table + edge table -->
+    <div>
+      <!-- Current vs Best table -->
+      <div class="teach-panel">
+        <div class="teach-panel-header">Current Partition vs Best Partition So Far</div>
+        <div class="teach-panel-body" style="padding:10px;">
+          <table class="cmp-table">
+            <thead><tr>
+              <th class="row-label">Item</th>
+              <th>Current Candidate</th>
+              <th>Best So Far</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="row-label">Set S</td>
+                <td><span id="bcmp-curS" class="val-current">—</span></td>
+                <td><span id="bcmp-bestS" class="val-best">—</span></td></tr>
+              <tr><td class="row-label">Set T</td>
+                <td><span id="bcmp-curT" class="val-current">—</span></td>
+                <td><span id="bcmp-bestT" class="val-best">—</span></td></tr>
+              <tr><td class="row-label">Cut Size</td>
+                <td><span id="bcmp-curCut" class="val-current">—</span></td>
+                <td><span id="bcmp-bestCut" class="val-best">—</span></td></tr>
+              <tr><td class="row-label">Partition #</td>
+                <td><span id="bcmp-curNum" style="color:var(--text2);font-family:monospace;">—</span></td>
+                <td><span id="bcmp-bestNum" style="color:var(--text2);font-family:monospace;">—</span></td></tr>
+              <tr><td class="row-label">Decision</td>
+                <td colspan="2" id="bcmp-decision"><span class="decision-badge db-none">Waiting…</span></td></tr>
+            </tbody>
+          </table>
+          <div id="bruteDecisionExplain" style="font-size:12px;color:var(--text2);margin-top:10px;line-height:1.6;border-top:1px solid var(--border);padding-top:8px;">
+            The comparison will appear here once the first partition is evaluated.
+          </div>
+        </div>
+      </div>
+
+      <!-- Edge-by-edge evaluation -->
+      <div class="teach-panel">
+        <div class="teach-panel-header">Edge-by-Edge Cut Evaluation</div>
+        <div class="teach-panel-body" style="padding:10px;">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:6px;">For the current partition, each edge is checked: do its endpoints belong to different sets?</div>
+          <table class="edge-eval-table">
+            <thead><tr><th>Edge</th><th>Endpoint Sets</th><th>Result</th></tr></thead>
+            <tbody id="bruteEdgeTable">
+              <tr><td colspan="3" style="color:var(--text3);text-align:center;padding:12px;">—</td></tr>
+            </tbody>
+          </table>
+          <div id="bruteEdgeSummary" style="font-size:12px;color:var(--text2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History log -->
+  <div class="teach-panel">
+    <div class="teach-panel-header" style="display:flex;justify-content:space-between;">
+      <span>Brute Force History — All Partitions Tested</span>
+      <span id="bruteHistCount" style="color:var(--text3);">0 tested</span>
+    </div>
+    <div class="teach-panel-body" style="padding:8px;">
+      <div id="bruteHistoryLog" class="history-log">
+        <div class="history-entry"><span class="he-text" style="color:var(--text3);">History will appear as partitions are evaluated…</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final conclusion -->
+  <div class="stop-panel" id="bruteFinalPanel">
+    <div class="sp-title">✅ Brute Force Complete — Final Conclusion</div>
+    <div id="bruteFinalBody" style="font-size:14px;color:var(--text2);line-height:1.8;"></div>
   </div>
 
   <h2 class="section-h2">Why Brute Force Becomes Impractical</h2>
   <svg id="bruteGrowthChart" viewBox="0 0 600 200" width="100%" height="200" style="background:#0a0d18;border-radius:var(--radius);display:block;max-width:600px;"></svg>
 
-  <div class="box-danger">
+  <div class="box-danger" style="margin-top:16px;">
     <div class="box-label">⛔ Exam / Viva Tip</div>
     If asked "why can't we just try all partitions?", give a concrete example: for n = 50, 2<sup>50</sup> ≈ 10<sup>15</sup> partitions. Even a modern computer checking 10<sup>9</sup> per second would take over 11 days for n = 50 alone — and the count doubles with every added vertex.
   </div>
@@ -1401,45 +1584,124 @@ table.edu-table tr:hover td { background: var(--bg3); }
     </div>
   </div>
 
-  <h2 class="section-h2">Interactive Animation</h2>
-  <p>The animation below runs local search on a preset graph. Watch as vertices flip to improve the cut, and observe where the algorithm stops.</p>
+  <h2 class="section-h2">Interactive Teaching Animation</h2>
+  <p>Each step tests one vertex at a time. The tables show you exactly what changed, why, and what the algorithm decides next.</p>
 
-  <div id="localGraph" style="background:#0a0d18;border:1px solid var(--border);border-radius:var(--radius-lg);max-width:700px;margin-bottom:14px;">
-    <svg id="localSVG" viewBox="0 0 700 280" width="100%" height="280"></svg>
-  </div>
+  <div class="algo-teach-layout">
 
-  <div class="stats-row">
-    <div class="stat-badge"><span class="sval" id="lstat-cur">0</span><span class="slbl">Current Cut</span></div>
-    <div class="stat-badge"><span class="sval" id="lstat-moves">0</span><span class="slbl">Total Flips</span></div>
-    <div class="stat-badge"><span class="sval" id="lstat-iter">0</span><span class="slbl">Iterations</span></div>
-    <div class="stat-badge"><span class="sval" id="lstat-vertex">—</span><span class="slbl">Checking Vertex</span></div>
-    <div class="stat-badge"><span class="sval" id="lstat-gain">—</span><span class="slbl">Flip Gain</span></div>
-  </div>
+    <!-- LEFT: graph + controls -->
+    <div>
+      <div id="localGraph" style="background:#060a14;border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;">
+        <svg id="localSVG" viewBox="0 0 700 280" width="100%" height="280"></svg>
+      </div>
 
-  <div class="controls-row">
-    <button class="btn btn-primary" id="lplay" onclick="localPlay()">▶ Play</button>
-    <button class="btn btn-secondary" id="lpause" onclick="localPause()" disabled>⏸ Pause</button>
-    <button class="btn btn-secondary" id="lstep" onclick="localStep()">⏭ Step</button>
-    <button class="btn btn-red" onclick="localReset()">↺ Reset</button>
-    <div class="slider-wrap">
-      Speed: <input type="range" id="lspeed" min="1" max="10" value="5"> <span id="lspeedlbl">5</span>
+      <div class="stats-row" style="gap:8px;">
+        <div class="stat-badge"><span class="sval" id="lstat-cur">0</span><span class="slbl">Current Cut</span></div>
+        <div class="stat-badge"><span class="sval" id="lstat-moves">0</span><span class="slbl">Flips Made</span></div>
+        <div class="stat-badge"><span class="sval" id="lstat-iter">0</span><span class="slbl">Pass #</span></div>
+        <div class="stat-badge"><span class="sval" id="lstat-vertex">—</span><span class="slbl">Testing Vertex</span></div>
+        <div class="stat-badge"><span class="sval" id="lstat-gain">—</span><span class="slbl">Gain</span></div>
+      </div>
+
+      <div class="controls-row" style="margin-top:10px;">
+        <button class="btn btn-primary" id="lplay" onclick="localPlay()">▶ Play</button>
+        <button class="btn btn-secondary" id="lpause" onclick="localPause()" disabled>⏸ Pause</button>
+        <button class="btn btn-secondary" id="lstep" onclick="localStep()">⏭ Step</button>
+        <button class="btn btn-red" onclick="localReset()">↺ Reset</button>
+        <div class="slider-wrap">Speed: <input type="range" id="lspeed" min="1" max="10" value="5"> <span id="lspeedlbl">5</span></div>
+      </div>
+
+      <!-- Narrative -->
+      <div class="narrative-box" id="localNarrative" style="margin-top:14px;">
+        <span class="nar-label">What is happening right now</span>
+        Click <strong>Step</strong> or <strong>Play</strong> to begin. Local search will test flipping one vertex at a time and only accept improvements.
+      </div>
+
+      <!-- Current partition display -->
+      <div class="partition-display" style="margin-top:0;">
+        <div class="part-side side-a">
+          <div class="side-label">Current Set S (blue)</div>
+          <div class="side-verts" id="lpartA">—</div>
+        </div>
+        <div class="part-side side-b">
+          <div class="side-label">Current Set T (red)</div>
+          <div class="side-verts" id="lpartB">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: comparison + edge changes -->
+    <div>
+      <!-- Current vs Candidate -->
+      <div class="teach-panel">
+        <div class="teach-panel-header">Current Solution vs Candidate After Move</div>
+        <div class="teach-panel-body" style="padding:10px;">
+          <table class="cmp-table">
+            <thead><tr>
+              <th class="row-label">Item</th>
+              <th>Current Solution</th>
+              <th>Candidate (after flip)</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="row-label">Set S</td>
+                <td><span id="lcmp-curS" class="val-current">—</span></td>
+                <td><span id="lcmp-candS" class="val-cand">—</span></td></tr>
+              <tr><td class="row-label">Set T</td>
+                <td><span id="lcmp-curT" class="val-current">—</span></td>
+                <td><span id="lcmp-candT" class="val-cand">—</span></td></tr>
+              <tr><td class="row-label">Cut Size</td>
+                <td><span id="lcmp-curCut" class="val-current">—</span></td>
+                <td><span id="lcmp-candCut" class="val-cand">—</span></td></tr>
+              <tr><td class="row-label">Vertex Moved</td>
+                <td>—</td>
+                <td><span id="lcmp-vertex" style="color:#fde68a;font-family:monospace;font-weight:bold;">—</span></td></tr>
+              <tr><td class="row-label">Net Gain</td>
+                <td>—</td>
+                <td><span id="lcmp-gain" style="font-family:monospace;font-weight:bold;">—</span></td></tr>
+              <tr><td class="row-label">Decision</td>
+                <td colspan="2" id="lcmp-decision"><span class="decision-badge db-none">Waiting…</span></td></tr>
+            </tbody>
+          </table>
+          <div id="localDecisionExplain" style="font-size:12px;color:var(--text2);margin-top:10px;line-height:1.6;border-top:1px solid var(--border);padding-top:8px;">
+            The move evaluation will appear here.
+          </div>
+        </div>
+      </div>
+
+      <!-- Edge change table -->
+      <div class="teach-panel">
+        <div class="teach-panel-header">Edge-by-Edge Change When Flipping This Vertex</div>
+        <div class="teach-panel-body" style="padding:10px;">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:6px;">Only edges incident to the tested vertex can change status. All other edges stay the same.</div>
+          <table class="edge-eval-table">
+            <thead><tr><th>Edge</th><th>Before</th><th>After</th><th>Change</th></tr></thead>
+            <tbody id="localEdgeTable">
+              <tr><td colspan="4" style="color:var(--text3);text-align:center;padding:12px;">—</td></tr>
+            </tbody>
+          </table>
+          <div id="localEdgeSummary" style="font-size:12px;color:var(--text2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);"></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="step-explain" id="localExplain">
-    <div class="step-num">Ready</div>
-    Click <strong>Play</strong> or <strong>Step</strong> to start the local-search algorithm.
+  <!-- History -->
+  <div class="teach-panel">
+    <div class="teach-panel-header" style="display:flex;justify-content:space-between;">
+      <span>Local Search History — Move-by-Move Log</span>
+      <span id="localHistCount" style="color:var(--text3);">0 moves tested</span>
+    </div>
+    <div class="teach-panel-body" style="padding:8px;">
+      <div id="localHistoryLog" class="history-log">
+        <div class="history-entry"><span class="he-text" style="color:var(--text3);">History will appear as vertices are evaluated…</span></div>
+      </div>
+    </div>
   </div>
 
-  <div class="partition-display">
-    <div class="part-side side-a">
-      <div class="side-label">Set S (blue side)</div>
-      <div class="side-verts" id="lpartA">—</div>
-    </div>
-    <div class="part-side side-b">
-      <div class="side-label">Set T (red side)</div>
-      <div class="side-verts" id="lpartB">—</div>
-    </div>
+  <!-- Why we stop -->
+  <div class="stop-panel" id="localStopPanel">
+    <div class="sp-title">🛑 Why Local Search Stops Here</div>
+    <div id="localStopBody" style="font-size:14px;color:var(--text2);line-height:1.8;"></div>
   </div>
 
   <div class="box-tip" style="margin-top:18px;">
@@ -2087,11 +2349,14 @@ const DEMO_GRAPH = {
 };
 
 /* ============================================================
-   BRUTE FORCE SECTION
+   BRUTE FORCE — TEACHING VERSION
+   All panels (comparison table, bitmask decoder, edge table,
+   history log, narrative, final conclusion) update each step.
    ============================================================ */
 let bruteInitialized = false;
 let bruteState = {};
 let bruteTimer = null;
+let bruteHistory = [];
 
 function initBrute() {
   bruteInitialized = true;
@@ -2102,21 +2367,60 @@ function initBrute() {
 function bruteReset() {
   clearInterval(bruteTimer);
   bruteTimer = null;
+  bruteHistory = [];
   const n = DEMO_GRAPH.vertices.length;
   bruteState = {
     n, mask: 0, total: Math.pow(2, n),
-    bestCut: 0, bestMask: 0,
-    running: false, done: false
+    bestCut: -1, bestMask: -1,
+    running: false, done: false,
+    optimalMasks: []
   };
-  updateBruteDisplay([0,0,0,0,0], -1, 0, 0, 'Ready');
+
+  // SVG
+  const svg = document.getElementById('bruteSVG');
+  if (svg) drawGraph(svg, DEMO_GRAPH.vertices, DEMO_GRAPH.edges, Array(n).fill(0), -1);
+
+  // Stats
+  document.getElementById('bstat-mask').textContent = '—';
+  document.getElementById('bstat-cur').textContent = '—';
+  document.getElementById('bstat-best').textContent = '—';
+  document.getElementById('bstat-eval').textContent = '0';
+  document.getElementById('bstat-total').textContent = Math.pow(2, n);
+
+  // Buttons
   document.getElementById('bplay').disabled = false;
   document.getElementById('bpause').disabled = true;
   document.getElementById('bstep').disabled = false;
-  document.getElementById('bstat-total').textContent = Math.pow(2, n);
-  document.getElementById('bstat-eval').textContent = 0;
-  document.getElementById('bBestCutDisp').textContent = 0;
-  document.getElementById('bBestA').textContent = '—';
-  document.getElementById('bBestB').textContent = '—';
+
+  // Comparison table
+  setEl('bcmp-curS','—'); setEl('bcmp-curT','—'); setEl('bcmp-curCut','—'); setEl('bcmp-curNum','—');
+  setEl('bcmp-bestS','—'); setEl('bcmp-bestT','—'); setEl('bcmp-bestCut','—'); setEl('bcmp-bestNum','—');
+  document.getElementById('bcmp-decision').innerHTML = '<span class="decision-badge db-none">Waiting…</span>';
+  document.getElementById('bruteDecisionExplain').textContent = 'The comparison will appear once the first partition is evaluated.';
+
+  // Bitmask decoder
+  document.getElementById('bruteBitmaskDecoder').innerHTML = '<span style="color:var(--text3);font-size:12px;">Waiting for first step…</span>';
+  document.getElementById('bruteBitmaskSummary').textContent = '';
+
+  // Edge table
+  document.getElementById('bruteEdgeTable').innerHTML = '<tr><td colspan="3" style="color:var(--text3);text-align:center;padding:12px;">—</td></tr>';
+  document.getElementById('bruteEdgeSummary').textContent = '';
+
+  // History
+  document.getElementById('bruteHistoryLog').innerHTML = '<div class="history-entry"><span class="he-text" style="color:var(--text3);">History will appear as partitions are evaluated…</span></div>';
+  document.getElementById('bruteHistCount').textContent = '0 tested';
+
+  // Narrative
+  document.getElementById('bruteNarrative').innerHTML = '<span class="nar-label">What is happening right now</span>Click <strong>Step</strong> or <strong>Play</strong> to begin. Brute force will test every possible partition one at a time.';
+
+  // Stop panel
+  const fp = document.getElementById('bruteFinalPanel');
+  if (fp) fp.classList.remove('visible');
+}
+
+function setEl(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
 }
 
 function maskToPartition(mask, n) {
@@ -2134,59 +2438,202 @@ function partitionDisplay(partition, vertices) {
   return {S, T};
 }
 
-function updateBruteDisplay(partition, activeV, cutSize, bestCut, phaseMsg) {
-  const {vertices, edges} = DEMO_GRAPH;
-  const svg = document.getElementById('bruteSVG');
-  if (svg) drawGraph(svg, vertices, edges, partition, activeV);
+function computeCutSize(edges, partition) {
+  return edges.filter(({u, v}) => partition[u] !== partition[v]).length;
+}
+
+function bruteBuildBitmaskDecoder(mask, n, partition) {
+  const {vertices} = DEMO_GRAPH;
+  const container = document.getElementById('bruteBitmaskDecoder');
+  container.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const bit = (mask >> i) & 1;
+    const cell = document.createElement('div');
+    cell.className = 'bit-cell ' + (bit === 1 ? 'in-s' : 'in-t');
+    cell.innerHTML = `<div class="bc-lbl">${vertices[i].label}</div><div class="bc-bit">${bit}</div><div class="bc-set">${bit===1?'Set S':'Set T'}</div>`;
+    container.appendChild(cell);
+  }
   const {S, T} = partitionDisplay(partition, vertices);
-  document.getElementById('bpartA').textContent = S.join(', ') || '∅';
-  document.getElementById('bpartB').textContent = T.join(', ') || '∅';
-  document.getElementById('bstat-cur').textContent = cutSize;
-  document.getElementById('bstat-best').textContent = bestCut;
+  document.getElementById('bruteBitmaskSummary').innerHTML =
+    `→ Generated partition: <strong style="color:#93c5fd">S = {${S.join(', ')||'∅'}}</strong>, <strong style="color:#fca5a5">T = {${T.join(', ')||'∅'}}</strong>`;
+}
+
+function bruteBuildEdgeTable(partition) {
+  const {vertices, edges} = DEMO_GRAPH;
+  const tbody = document.getElementById('bruteEdgeTable');
+  tbody.innerHTML = '';
+  let cutCount = 0, intCount = 0;
+  edges.forEach(({u, v}) => {
+    const isCut = partition[u] !== partition[v];
+    if (isCut) cutCount++; else intCount++;
+    const uL = vertices[u].label, vL = vertices[v].label;
+    const uSet = partition[u]===0?'S':'T', vSet = partition[v]===0?'S':'T';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${uL}–${vL}</td>
+      <td>${uL}∈${uSet}, ${vL}∈${vSet}</td>
+      <td class="${isCut?'eet-cut':'eet-nocut'}">${isCut?'✓ Cut edge — endpoints in different sets':'✕ Internal — both endpoints in '+uSet}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('bruteEdgeSummary').innerHTML =
+    `Cut edges counted: <strong style="color:#10b981">${cutCount}</strong> &nbsp;|&nbsp; Internal edges: <strong style="color:#475569">${intCount}</strong><br>` +
+    `<strong>Therefore cut size = ${cutCount}</strong>. This edge counts because its endpoints are in different sets; internal edges do not count.`;
+  return cutCount;
+}
+
+function bruteUpdateHistory(mask, n, partition, cutSize, decision) {
+  const {vertices} = DEMO_GRAPH;
+  const {S, T} = partitionDisplay(partition, vertices);
+  const binMask = mask.toString(2).padStart(n,'0');
+  const num = bruteHistory.length + 1;
+
+  let badgeHtml = '';
+  if (decision === 'new')    badgeHtml = '<span class="decision-badge db-new">New Best</span>';
+  else if (decision === 'tie')badgeHtml = '<span class="decision-badge db-tie">Tie</span>';
+  else                        badgeHtml = '<span class="decision-badge db-rej">Rejected</span>';
+
+  bruteHistory.push({mask, binMask, cutSize, decision, S, T});
+
+  const log = document.getElementById('bruteHistoryLog');
+  if (num === 1) log.innerHTML = ''; // clear placeholder
+  const entry = document.createElement('div');
+  entry.className = 'history-entry';
+  entry.innerHTML = `
+    <span class="he-num">#${num}</span>
+    <span class="he-text">Mask <span style="color:#93c5fd">${binMask}</span> → S={${S.join(',')||'∅'}}, T={${T.join(',')||'∅'}}, cut=<strong>${cutSize}</strong></span>
+    <span class="he-badge">${badgeHtml}</span>
+  `;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
+  document.getElementById('bruteHistCount').textContent = `${num} tested`;
 }
 
 function bruteDoStep() {
   if (bruteState.done) return;
-  const {n, edges, vertices} = {...DEMO_GRAPH, ...bruteState};
+  const {n, total} = bruteState;
+  const {vertices, edges} = DEMO_GRAPH;
+
+  if (bruteState.mask >= total) { bruteDone(); return; }
+
   const mask = bruteState.mask;
   const partition = maskToPartition(mask, n);
-  const cutSize = computeCutSize(DEMO_GRAPH.edges, partition);
+  const cutSize = computeCutSize(edges, partition);
   bruteState.mask++;
-  const isNew = cutSize > bruteState.bestCut;
-  if (isNew) {
+
+  const evalCount = bruteState.mask;
+  const binMask = mask.toString(2).padStart(n, '0');
+  const {S, T} = partitionDisplay(partition, vertices);
+
+  // SVG
+  drawGraph(document.getElementById('bruteSVG'), vertices, edges, partition, -1);
+
+  // Stats
+  document.getElementById('bstat-mask').textContent = binMask;
+  document.getElementById('bstat-cur').textContent = cutSize;
+  document.getElementById('bstat-eval').textContent = evalCount;
+
+  // Bitmask decoder
+  bruteBuildBitmaskDecoder(mask, n, partition);
+
+  // Edge table
+  bruteBuildEdgeTable(partition);
+
+  // Comparison + decision
+  const prevBest = bruteState.bestCut;
+  let decision = 'reject';
+  let isNew = false;
+
+  if (cutSize > bruteState.bestCut) {
     bruteState.bestCut = cutSize;
     bruteState.bestMask = mask;
-    const {S, T} = partitionDisplay(partition, DEMO_GRAPH.vertices);
-    document.getElementById('bBestA').textContent = S.join(', ') || '∅';
-    document.getElementById('bBestB').textContent = T.join(', ') || '∅';
-    document.getElementById('bBestCutDisp').textContent = cutSize;
+    bruteState.optimalMasks = [mask];
+    decision = 'new';
+    isNew = true;
+  } else if (cutSize === bruteState.bestCut && bruteState.bestCut >= 0) {
+    bruteState.optimalMasks.push(mask);
+    decision = 'tie';
   }
-  const evalCount = bruteState.mask;
-  document.getElementById('bstat-eval').textContent = evalCount;
-  document.getElementById('bstat-mask').textContent = mask.toString(2).padStart(n, '0');
-  updateBruteDisplay(partition, -1, cutSize, bruteState.bestCut, '');
 
-  // Highlight pseudocode lines
-  clearBruteHighlight();
-  if (mask === 0) highlightBrute('bline4');
-  else if (isNew) { highlightBrute('bline9'); highlightBrute('bline10'); }
-  else highlightBrute('bline6');
+  const bestPart = bruteState.bestMask >= 0 ? maskToPartition(bruteState.bestMask, n) : Array(n).fill(0);
+  const {S: bS, T: bT} = partitionDisplay(bestPart, vertices);
 
-  const {S, T} = partitionDisplay(partition, DEMO_GRAPH.vertices);
-  const explain = document.getElementById('bruteExplain');
-  explain.innerHTML = `<div class="step-num">Partition ${evalCount} of ${bruteState.total}</div>
-    Mask <code>${mask.toString(2).padStart(n, '0')}</code> → S = {${S.join(', ')|| '∅'}}, T = {${T.join(', ')|| '∅'}}<br>
-    Cut size = <strong>${cutSize}</strong>. ${isNew ? `<span style="color:var(--green)">🆕 New best!</span>` : `Best remains ${bruteState.bestCut}.`}`;
+  setEl('bcmp-curS', '{' + (S.join(', ')||'∅') + '}');
+  setEl('bcmp-curT', '{' + (T.join(', ')||'∅') + '}');
+  setEl('bcmp-curCut', cutSize);
+  setEl('bcmp-curNum', `#${evalCount} (mask ${binMask})`);
+  setEl('bcmp-bestS', '{' + (bS.join(', ')||'∅') + '}');
+  setEl('bcmp-bestT', '{' + (bT.join(', ')||'∅') + '}');
+  setEl('bcmp-bestCut', bruteState.bestCut >= 0 ? bruteState.bestCut : '—');
+  setEl('bcmp-bestNum', bruteState.bestMask >= 0 ? `mask ${bruteState.bestMask.toString(2).padStart(n,'0')}` : '—');
+  document.getElementById('bstat-best').textContent = bruteState.bestCut >= 0 ? bruteState.bestCut : '—';
 
-  if (bruteState.mask >= bruteState.total) {
-    bruteState.done = true;
-    clearInterval(bruteTimer);
-    bruteTimer = null;
-    document.getElementById('bplay').disabled = true;
-    document.getElementById('bpause').disabled = true;
-    document.getElementById('bstep').disabled = true;
-    explain.innerHTML += `<br><span style="color:var(--green)">✅ Complete. Maximum cut = <strong>${bruteState.bestCut}</strong>.</span>`;
+  let decHtml = '', decText = '';
+  if (decision === 'new') {
+    decHtml = '<span class="decision-badge db-new">✓ New Best Partition</span>';
+    decText = `Current cut size = ${cutSize}, best so far was ${prevBest < 0 ? 'none' : prevBest}. This partition produces more cut edges than any previous one. It becomes the new best partition.`;
+  } else if (decision === 'tie') {
+    decHtml = '<span class="decision-badge db-tie">Tie — Earlier Kept</span>';
+    decText = `Current cut size = ${cutSize}, best so far = ${bruteState.bestCut}. This partition matches the current best. It is a tie. We keep the earlier partition (mask ${bruteState.bestMask.toString(2).padStart(n,'0')}) since ties are not improvements.`;
+  } else {
+    decHtml = '<span class="decision-badge db-rej">✗ Rejected</span>';
+    decText = `Current cut size = ${cutSize}, best so far = ${bruteState.bestCut}. This partition produces fewer cut edges than the current best. It is rejected.`;
   }
+  document.getElementById('bcmp-decision').innerHTML = decHtml;
+  document.getElementById('bruteDecisionExplain').textContent = decText;
+
+  // History
+  bruteUpdateHistory(mask, n, partition, cutSize, decision);
+
+  // Narrative
+  const narrativeEl = document.getElementById('bruteNarrative');
+  narrativeEl.innerHTML = `<span class="nar-label">Testing partition ${evalCount} of ${total}</span>
+    Brute force is now evaluating partition number <strong>${evalCount}</strong>. The binary mask <strong>${binMask}</strong> encodes which vertices go into Set S (bits = 1) and which go into Set T (bits = 0). 
+    The algorithm scanned all ${edges.length} edges and found <strong>${cutSize} cut edges</strong>. 
+    ${decision === 'new' ? 'This cut size beats the previous best — the best solution is now updated.' : 
+      decision === 'tie' ? 'This matches the current best but does not beat it — the algorithm continues.' :
+      'This cut size does not beat the current best — this partition is discarded.'}
+    Brute force does not guess or skip anything; it checks every possible partition.`;
+
+  // Done check
+  if (bruteState.mask >= total) bruteDone();
+}
+
+function bruteDone() {
+  bruteState.done = true;
+  clearInterval(bruteTimer);
+  bruteTimer = null;
+  document.getElementById('bplay').disabled = true;
+  document.getElementById('bpause').disabled = true;
+  document.getElementById('bstep').disabled = true;
+
+  const n = bruteState.n;
+  const {vertices, edges} = DEMO_GRAPH;
+  const bestPart = maskToPartition(bruteState.bestMask, n);
+  const {S, T} = partitionDisplay(bestPart, vertices);
+  const numOptimal = bruteState.optimalMasks.length;
+
+  const fp = document.getElementById('bruteFinalPanel');
+  if (fp) {
+    fp.classList.add('visible');
+    document.getElementById('bruteFinalBody').innerHTML = `
+      <strong>Brute force checked all ${bruteState.total} unique partitions.</strong><br>
+      Each was evaluated by counting cut edges; the largest value was tracked.<br><br>
+      <strong style="color:#6ee7b7">Maximum cut size found = ${bruteState.bestCut}</strong><br>
+      <strong>One optimal partition:</strong> S = {${S.join(', ')||'∅'}}, T = {${T.join(', ')||'∅'}}<br>
+      ${numOptimal > 1 ? `<strong>Note:</strong> ${numOptimal} partitions achieve this cut size (the other side of each partition is symmetric and also optimal).<br>` : ''}
+      <br>
+      This result is <strong>guaranteed to be optimal</strong>. Brute force never skips a partition, so no better solution exists.
+    `;
+  }
+
+  document.getElementById('bruteNarrative').innerHTML = `<span class="nar-label">Algorithm complete</span>
+    Brute force has finished. All <strong>${bruteState.total} partitions</strong> were tested. 
+    The maximum cut size is <strong>${bruteState.bestCut}</strong>, achieved by S = {${S.join(', ')||'∅'}}. 
+    This answer is exact — brute force checked every possibility.`;
+
+  // Draw best partition
+  drawGraph(document.getElementById('bruteSVG'), vertices, edges, bestPart, -1);
 }
 
 function brutePlay() {
@@ -2199,8 +2646,7 @@ function brutePlay() {
   bruteTimer = setInterval(bruteDoStep, delay);
 }
 function brutePause() {
-  clearInterval(bruteTimer);
-  bruteTimer = null;
+  clearInterval(bruteTimer); bruteTimer = null;
   bruteState.running = false;
   document.getElementById('bplay').disabled = false;
   document.getElementById('bpause').disabled = true;
@@ -2331,11 +2777,15 @@ function drawBruteGrowthChart() {
 }
 
 /* ============================================================
-   LOCAL SEARCH SECTION
+   LOCAL SEARCH — TEACHING VERSION
+   Every step shows: current vs candidate comparison table,
+   edge-by-edge change for the tested vertex, history log,
+   narrative, and "why we stop" panel.
    ============================================================ */
 let localInitialized = false;
 let localState = {};
 let localTimer = null;
+let localHistory = [];
 
 function initLocal() {
   localInitialized = true;
@@ -2345,48 +2795,151 @@ function initLocal() {
 function localReset() {
   clearInterval(localTimer);
   localTimer = null;
+  localHistory = [];
   const n = DEMO_GRAPH.vertices.length;
-  // Initial partition: first half in S (0), rest in T (1)
-  const partition = [0, 0, 0, 1, 1];
+  const partition = [0, 0, 0, 1, 1]; // fixed initial partition for teaching clarity
+
   localState = {
-    n, partition: [...partition],
-    vi: 0, // current vertex index being checked
+    n,
+    partition: [...partition],
+    vi: 0,
     improved: true,
-    running: false, done: false,
-    totalFlips: 0, totalIter: 0, phase: 'init'
+    running: false,
+    done: false,
+    totalFlips: 0,
+    totalIter: 1,
+    phase: 'init'
   };
+
+  // SVG
+  drawGraph(document.getElementById('localSVG'), DEMO_GRAPH.vertices, DEMO_GRAPH.edges, partition, -1);
+
+  // Stats
+  const initCut = computeCutSize(DEMO_GRAPH.edges, partition);
+  document.getElementById('lstat-cur').textContent = initCut;
+  document.getElementById('lstat-moves').textContent = 0;
+  document.getElementById('lstat-iter').textContent = 1;
+  document.getElementById('lstat-vertex').textContent = '—';
+  document.getElementById('lstat-gain').textContent = '—';
+
+  // Buttons
   document.getElementById('lplay').disabled = false;
   document.getElementById('lpause').disabled = true;
   document.getElementById('lstep').disabled = false;
-  updateLocalDisplay(partition, -1, 0, '');
-  document.getElementById('lstat-moves').textContent = 0;
-  document.getElementById('lstat-iter').textContent = 0;
-  document.getElementById('lstat-vertex').textContent = '—';
-  document.getElementById('lstat-gain').textContent = '—';
-  document.getElementById('localExplain').innerHTML = '<div class="step-num">Ready</div>Click <strong>Play</strong> or <strong>Step</strong> to begin.';
-}
 
-function updateLocalDisplay(partition, activeV, cutSize, msg) {
-  const {vertices, edges} = DEMO_GRAPH;
-  const svg = document.getElementById('localSVG');
-  if (svg) drawGraph(svg, vertices, edges, partition, activeV);
-  const {S, T} = partitionDisplay(partition, vertices);
+  // Partition display
+  const {S, T} = partitionDisplay(partition, DEMO_GRAPH.vertices);
   document.getElementById('lpartA').textContent = S.join(', ') || '∅';
   document.getElementById('lpartB').textContent = T.join(', ') || '∅';
-  document.getElementById('lstat-cur').textContent = cutSize;
+
+  // Comparison table
+  setEl('lcmp-curS', '{' + (S.join(', ')||'∅') + '}');
+  setEl('lcmp-curT', '{' + (T.join(', ')||'∅') + '}');
+  setEl('lcmp-curCut', initCut);
+  setEl('lcmp-candS', '—'); setEl('lcmp-candT', '—');
+  setEl('lcmp-candCut', '—'); setEl('lcmp-vertex', '—'); setEl('lcmp-gain', '—');
+  document.getElementById('lcmp-decision').innerHTML = '<span class="decision-badge db-none">Waiting…</span>';
+  document.getElementById('localDecisionExplain').textContent = 'The move evaluation will appear here.';
+
+  // Edge table
+  document.getElementById('localEdgeTable').innerHTML = '<tr><td colspan="4" style="color:var(--text3);text-align:center;padding:12px;">—</td></tr>';
+  document.getElementById('localEdgeSummary').textContent = '';
+
+  // History
+  document.getElementById('localHistoryLog').innerHTML = `
+    <div class="history-entry">
+      <span class="he-num">Start</span>
+      <span class="he-text">Initial partition: S={${S.join(',')||'∅'}}, T={${T.join(',')||'∅'}}, cut=<strong>${initCut}</strong></span>
+    </div>`;
+  document.getElementById('localHistCount').textContent = '0 moves tested';
+
+  // Narrative
+  document.getElementById('localNarrative').innerHTML = `<span class="nar-label">Starting state</span>
+    Local search begins with the partition: <strong>S = {${S.join(', ')||'∅'}}</strong>, <strong>T = {${T.join(', ')||'∅'}}</strong>, cut size = <strong>${initCut}</strong>. 
+    The algorithm will now test flipping each vertex one at a time. It only accepts a flip if it strictly increases the cut size.`;
+
+  // Stop panel
+  const sp = document.getElementById('localStopPanel');
+  if (sp) sp.classList.remove('visible');
 }
 
 function computeGain(vi, partition, edges) {
-  // gain from flipping vi: neighbors on same side minus neighbors on other side
   let same = 0, other = 0;
   edges.forEach(({u, v}) => {
     if (u === vi || v === vi) {
-      const nbr = (u === vi) ? v : u;
+      const nbr = u === vi ? v : u;
       if (partition[nbr] === partition[vi]) same++;
       else other++;
     }
   });
-  return same - other; // gain = same - other (after flip, crossing = same, not crossing = other)
+  return same - other;
+}
+
+function localBuildEdgeTable(vi, partition) {
+  const {vertices, edges} = DEMO_GRAPH;
+  const tbody = document.getElementById('localEdgeTable');
+  tbody.innerHTML = '';
+
+  // Build candidate partition (flip vi)
+  const candPart = [...partition];
+  candPart[vi] ^= 1;
+
+  let gained = 0, lost = 0, stayInt = 0, stayCut = 0;
+
+  // Only edges incident to vi change; show all for context
+  edges.forEach(({u, v}) => {
+    const isIncident = u === vi || v === vi;
+    const beforeCut = partition[u] !== partition[v];
+    const afterCut  = candPart[u] !== candPart[v];
+    const uL = vertices[u].label, vL = vertices[v].label;
+
+    let changeClass = '', changeText = '';
+    if (!isIncident) {
+      // Non-incident edges don't change
+      changeClass = 'eet-same';
+      changeText = beforeCut ? 'Stays cut (unaffected)' : 'Stays internal (unaffected)';
+      if (beforeCut) stayCut++; else stayInt++;
+    } else {
+      if (!beforeCut && afterCut)  { changeClass = 'eet-gain'; changeText = '⬆ Gained cut edge'; gained++; }
+      else if (beforeCut && !afterCut){ changeClass = 'eet-lose'; changeText = '⬇ Lost cut edge'; lost++; }
+      else if (beforeCut && afterCut) { stayCut++; changeClass = 'eet-same'; changeText = 'Stays cut'; }
+      else                            { stayInt++; changeClass = 'eet-same'; changeText = 'Stays internal'; }
+    }
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${uL}–${vL}</td>
+      <td class="${beforeCut?'eet-cut':'eet-nocut'}">${beforeCut?'Cut':'Internal'}</td>
+      <td class="${afterCut?'eet-cut':'eet-nocut'}">${afterCut?'Cut':'Internal'}</td>
+      <td class="${changeClass}">${changeText}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const net = gained - lost;
+  const vL = vertices[vi].label;
+  let summaryHtml = '';
+  if (gained > 0 || lost > 0) {
+    summaryHtml = `Moving <strong>${vL}</strong> ${lost>0?`loses <strong style="color:#ef4444">${lost} cut edge${lost>1?'s':''}</strong>`:''}${lost>0&&gained>0?' and ':''}${gained>0?`gains <strong style="color:#10b981">${gained} cut edge${gained>1?'s':''}</strong>`:''}.
+    Net change = <strong style="color:${net>0?'#10b981':net<0?'#ef4444':'#94a3b8'}">${net>0?'+':''}${net}</strong>. 
+    ${net>0?'The cut size increases — this move is beneficial.':net<0?'The cut size decreases — this move is harmful.':'No net change — this move has zero effect.'}`;
+  } else {
+    summaryHtml = `Vertex <strong>${vL}</strong> has no incident edges that change cut status. Net change = 0.`;
+  }
+  document.getElementById('localEdgeSummary').innerHTML = summaryHtml;
+  return {gained, lost, net, candPart};
+}
+
+function localAddHistory(text, badgeHtml) {
+  const log = document.getElementById('localHistoryLog');
+  const count = localHistory.length + 1;
+  localHistory.push(text);
+  const entry = document.createElement('div');
+  entry.className = 'history-entry';
+  entry.innerHTML = `<span class="he-num">#${count}</span><span class="he-text">${text}</span><span class="he-badge">${badgeHtml}</span>`;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
+  document.getElementById('localHistCount').textContent = `${count} moves tested`;
 }
 
 function localDoStep() {
@@ -2403,52 +2956,123 @@ function localDoStep() {
   }
 
   const vi = localState.vi;
-  const gain = computeGain(vi, localState.partition, edges);
-  const cutSize = computeCutSize(edges, localState.partition);
   const vLabel = vertices[vi].label;
+  const curSide = localState.partition[vi] === 0 ? 'S' : 'T';
+  const gain = computeGain(vi, localState.partition, edges);
+  const cutBefore = computeCutSize(edges, localState.partition);
+
+  // Stats
   document.getElementById('lstat-vertex').textContent = vLabel;
   document.getElementById('lstat-gain').textContent = (gain >= 0 ? '+' : '') + gain;
-  updateLocalDisplay(localState.partition, vi, cutSize, '');
+  document.getElementById('lstat-cur').textContent = cutBefore;
 
-  clearLocalHighlight();
-  highlightLocal('lline5');
+  // SVG — highlight tested vertex
+  drawGraph(document.getElementById('localSVG'), vertices, edges, localState.partition, vi);
 
-  const explain = document.getElementById('localExplain');
+  // Build edge change table and get candidate partition
+  const {gained, lost, net, candPart} = localBuildEdgeTable(vi, localState.partition);
+  const cutAfter = computeCutSize(edges, candPart);
+
+  // Candidate partition display
+  const {S: curS, T: curT} = partitionDisplay(localState.partition, vertices);
+  const {S: candS, T: candT} = partitionDisplay(candPart, vertices);
+
+  setEl('lcmp-curS',  '{' + (curS.join(', ')||'∅') + '}');
+  setEl('lcmp-curT',  '{' + (curT.join(', ')||'∅') + '}');
+  setEl('lcmp-curCut', cutBefore);
+  setEl('lcmp-candS', '{' + (candS.join(', ')||'∅') + '}');
+  setEl('lcmp-candT', '{' + (candT.join(', ')||'∅') + '}');
+  setEl('lcmp-candCut', cutAfter);
+  setEl('lcmp-vertex', vLabel);
+  const gainEl = document.getElementById('lcmp-gain');
+  if (gainEl) {
+    gainEl.textContent = (gain >= 0 ? '+' : '') + gain;
+    gainEl.style.color = gain > 0 ? '#10b981' : gain < 0 ? '#ef4444' : '#94a3b8';
+  }
 
   if (gain > 0) {
-    highlightLocal('lline9'); highlightLocal('lline10'); highlightLocal('lline11');
-    localState.partition[vi] = 1 - localState.partition[vi];
+    // ACCEPT
+    document.getElementById('lcmp-decision').innerHTML = '<span class="decision-badge db-new">✓ Accepted — Cut Improves</span>';
+    document.getElementById('localDecisionExplain').innerHTML =
+      `Flipping <strong>${vLabel}</strong> from ${curSide} to ${curSide==='S'?'T':'S'} increases the cut from <strong>${cutBefore}</strong> to <strong style="color:#10b981">${cutAfter}</strong>. 
+      This move is accepted. The partition is now updated. The algorithm continues scanning from this new partition.`;
+
+    localState.partition[vi] ^= 1;
     localState.improved = true;
     localState.totalFlips++;
     document.getElementById('lstat-moves').textContent = localState.totalFlips;
-    const newCut = computeCutSize(edges, localState.partition);
-    explain.innerHTML = `<div class="step-num">Iteration ${localState.totalIter}, Vertex ${vLabel}</div>
-      Vertex <strong>${vLabel}</strong> is in ${localState.partition[vi]===1?'T':'S'} (just flipped).<br>
-      Gain was <strong>+${gain}</strong> → flipped to opposite side. New cut size = <strong>${newCut}</strong>.`;
+
+    // Update partition display
+    const {S: nS, T: nT} = partitionDisplay(localState.partition, vertices);
+    document.getElementById('lpartA').textContent = nS.join(', ') || '∅';
+    document.getElementById('lpartB').textContent = nT.join(', ') || '∅';
+    document.getElementById('lstat-cur').textContent = computeCutSize(edges, localState.partition);
+
+    // Narrative
+    document.getElementById('localNarrative').innerHTML = `<span class="nar-label">Pass ${localState.totalIter} — vertex ${vLabel} flipped</span>
+      Flipping vertex <strong>${vLabel}</strong> increases the cut from <strong>${cutBefore}</strong> to <strong>${cutAfter}</strong>. 
+      This is an improvement, so the flip is accepted. The current partition is updated to S = {${nS.join(', ')||'∅'}}, T = {${nT.join(', ')||'∅'}}. 
+      The algorithm marks that an improvement was found in this pass and continues scanning the remaining vertices.`;
+
+    localAddHistory(`Pass ${localState.totalIter}: Flip ${vLabel} (${curSide}→${curSide==='S'?'T':'S'}), cut ${cutBefore}→${cutAfter}`,
+      '<span class="decision-badge db-new">Accepted</span>');
+
   } else {
-    highlightLocal('lline6'); highlightLocal('lline7'); highlightLocal('lline8');
-    explain.innerHTML = `<div class="step-num">Iteration ${localState.totalIter}, Vertex ${vLabel}</div>
-      Vertex <strong>${vLabel}</strong> has gain <strong>${gain > 0 ? '+':''}${gain}</strong>. ${gain === 0 ? 'No improvement (gain = 0).' : 'Flipping would reduce the cut.'} Skip.`;
+    // REJECT
+    const reason = gain < 0
+      ? `Flipping <strong>${vLabel}</strong> would decrease the cut from <strong>${cutBefore}</strong> to <strong style="color:#ef4444">${cutAfter}</strong> (net change ${gain}). This move is rejected — local search only accepts improvements.`
+      : `Flipping <strong>${vLabel}</strong> gives no net change — cut stays at <strong>${cutBefore}</strong> (net change = 0). This move is rejected — ties do not improve the solution.`;
+
+    document.getElementById('lcmp-decision').innerHTML = gain < 0
+      ? '<span class="decision-badge db-rej">✗ Rejected — Cut Decreases</span>'
+      : '<span class="decision-badge db-tie">✗ Rejected — No Improvement</span>';
+    document.getElementById('localDecisionExplain').innerHTML = reason;
+
+    document.getElementById('localNarrative').innerHTML = `<span class="nar-label">Pass ${localState.totalIter} — vertex ${vLabel} skipped</span>
+      Testing whether to move <strong>${vLabel}</strong> from ${curSide} to the other side. 
+      ${gain < 0 ? `This would reduce the cut from ${cutBefore} to ${cutAfter}` : `This would not change the cut (stays at ${cutBefore})`}. 
+      Local search rejects this move and tries the next vertex.`;
+
+    localAddHistory(`Pass ${localState.totalIter}: Test ${vLabel} (${curSide}), gain=${gain}, cut stays ${cutBefore}`,
+      gain < 0 ? '<span class="decision-badge db-rej">Rejected</span>' : '<span class="decision-badge db-tie">No gain</span>');
   }
 
   localState.vi++;
   if (localState.vi >= n) {
     if (!localState.improved) {
-      // No improvement in this full pass — local maximum reached
+      // LOCAL MAXIMUM
       localState.done = true;
       clearInterval(localTimer);
       localTimer = null;
       document.getElementById('lplay').disabled = true;
       document.getElementById('lpause').disabled = true;
       document.getElementById('lstep').disabled = true;
+
       const finalCut = computeCutSize(edges, localState.partition);
-      explain.innerHTML += `<br><span style="color:var(--green)">✅ Local maximum reached. Cut size = <strong>${finalCut}</strong>. No further improvements possible.</span>`;
+      const {S: fS, T: fT} = partitionDisplay(localState.partition, vertices);
+
+      document.getElementById('localNarrative').innerHTML = `<span class="nar-label">Local search stopped</span>
+        The algorithm completed a full pass over all ${n} vertices without finding a single improving flip. 
+        Therefore it stops. The final cut size is <strong>${finalCut}</strong> with S = {${fS.join(', ')||'∅'}}, T = {${fT.join(', ')||'∅'}}.`;
+
+      const sp = document.getElementById('localStopPanel');
+      if (sp) {
+        sp.classList.add('visible');
+        document.getElementById('localStopBody').innerHTML = `
+          <strong>No single-vertex move can improve the cut any further.</strong><br>
+          The algorithm tested every vertex in the last full pass. No flip produced a positive gain.<br><br>
+          <strong>Therefore local search stops here.</strong><br>
+          This is a <strong>local optimum</strong> — no single-vertex move helps from this point.<br>
+          Final cut size = <strong style="color:#10b981">${finalCut}</strong> with partition S = {${fS.join(', ')||'∅'}}, T = {${fT.join(', ')||'∅'}}.<br><br>
+          <em>This may or may not be the global optimum. Local search cannot tell the difference. A different starting partition might have led to a better local optimum. Use brute force to verify whether this is globally optimal.</em>
+        `;
+      }
     } else {
-      // Start new iteration
       localState.vi = 0;
       localState.improved = false;
       localState.totalIter++;
       document.getElementById('lstat-iter').textContent = localState.totalIter;
+      clearLocalHighlight();
     }
   }
 }
@@ -2463,8 +3087,7 @@ function localPlay() {
   localTimer = setInterval(localDoStep, delay);
 }
 function localPause() {
-  clearInterval(localTimer);
-  localTimer = null;
+  clearInterval(localTimer); localTimer = null;
   localState.running = false;
   document.getElementById('lplay').disabled = false;
   document.getElementById('lpause').disabled = true;
