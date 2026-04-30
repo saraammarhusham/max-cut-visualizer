@@ -3112,22 +3112,18 @@ table.edu-table tr:hover td { background: var(--bg3); }
         </div>
       </div>
 
-      <div style="margin-top:16px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:12px;color:var(--text2);">
-          <span style="color:#fca5a5;font-family:var(--font-mono);">Brute force</span>
-          <span id="cmpBFBarLabel" style="font-family:var(--font-mono);color:#fca5a5;">32</span>
+      <div style="margin-top:18px;background:#060a14;border:1px solid var(--border);border-radius:var(--radius);padding:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px;">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);">Growth curve</div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:12px;font-family:var(--font-mono);">
+            <span style="color:#fca5a5;">● Exponential (Brute Force)</span>
+            <span style="color:#6ee7b7;">● Polynomial (Local Search)</span>
+          </div>
         </div>
-        <div style="height:18px;background:#111827;border:1px solid var(--border);border-radius:20px;overflow:hidden;">
-          <div id="cmpBFBar" style="height:100%;width:25%;background:linear-gradient(90deg,#7f1d1d,#ef4444);border-radius:20px;transition:width 0.2s;"></div>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 5px;font-size:12px;color:var(--text2);">
-          <span style="color:#6ee7b7;font-family:var(--font-mono);">Local search</span>
-          <span id="cmpLSBarLabel" style="font-family:var(--font-mono);color:#6ee7b7;">25</span>
-        </div>
-        <div style="height:18px;background:#111827;border:1px solid var(--border);border-radius:20px;overflow:hidden;">
-          <div id="cmpLSBar" style="height:100%;width:6.25%;background:linear-gradient(90deg,#064e3b,#10b981);border-radius:20px;transition:width 0.2s;"></div>
-        </div>
+        <svg id="cmpGrowthGraph" viewBox="0 0 720 360" width="100%" height="360" role="img" aria-label="X Y axis graph comparing exponential brute force growth and polynomial local search growth" style="display:block;max-width:100%;height:auto;"></svg>
+        <p style="font-size:13px;color:var(--text2);line-height:1.65;margin:12px 4px 0;">
+          This graph shows how brute force grows exponentially (2<sup>n</sup>), while local search grows polynomially (n²). As n increases, brute force quickly becomes infeasible, while local search remains practical.
+        </p>
       </div>
     </div>
 
@@ -4584,29 +4580,81 @@ function updateCmpGrowth() {
   const n=parseInt(slider.value,10);
   const brute=Math.pow(2,n);
   const local=n*n;
-  const maxLocal=20*20;
 
   setEl('cmpGrowthNValue',n);
   const bfValue=document.getElementById('cmpBFValue');
   const lsValue=document.getElementById('cmpLSValue');
-  const bfBar=document.getElementById('cmpBFBar');
-  const lsBar=document.getElementById('cmpLSBar');
-  const bfLabel=document.getElementById('cmpBFBarLabel');
-  const lsLabel=document.getElementById('cmpLSBarLabel');
 
   if(bfValue) bfValue.innerHTML=`2<sup>${n}</sup> = ${formatInt(brute)} partitions`;
   if(lsValue) lsValue.textContent=`≈ ${formatInt(local)} operations`;
-  if(bfLabel) bfLabel.textContent=formatInt(brute);
-  if(lsLabel) lsLabel.textContent=formatInt(local);
 
-  if(bfBar){
-    const brutePct=Math.max(4,Math.min(100,(n/20)*100));
-    bfBar.style.width=brutePct+'%';
+  drawCmpGrowthGraph(n, brute, local);
+}
+
+function drawCmpGrowthGraph(activeN, bruteValue, localValue) {
+  const svg=document.getElementById('cmpGrowthGraph');
+  if(!svg)return;
+
+  const width=720, height=360;
+  const padL=70, padR=26, padT=28, padB=58;
+  const plotW=width-padL-padR;
+  const plotH=height-padT-padB;
+  const minN=2, maxN=20;
+  const maxY=Math.pow(2,maxN);
+  const logY=(value)=>Math.log10(Math.max(1,value));
+  const maxLog=logY(maxY);
+  const xFor=(x)=>padL+((x-minN)/(maxN-minN))*plotW;
+  const yFor=(y)=>padT+plotH-(logY(y)/maxLog)*plotH;
+
+  const brutePts=[];
+  const localPts=[];
+  for(let i=minN;i<=maxN;i++){
+    brutePts.push(`${xFor(i).toFixed(2)},${yFor(Math.pow(2,i)).toFixed(2)}`);
+    localPts.push(`${xFor(i).toFixed(2)},${yFor(i*i).toFixed(2)}`);
   }
-  if(lsBar){
-    const localPct=Math.max(4,Math.min(100,(local/maxLocal)*100));
-    lsBar.style.width=localPct+'%';
-  }
+
+  const activeX=xFor(activeN);
+  const bruteY=yFor(bruteValue);
+  const localY=yFor(localValue);
+  const yTicks=[1,10,100,1000,10000,100000,1000000];
+  const xTicks=[2,5,10,15,20];
+
+  let grid='';
+  yTicks.forEach(t=>{
+    const y=yFor(t);
+    grid+=`<line x1="${padL}" y1="${y}" x2="${width-padR}" y2="${y}" stroke="#1a2236" stroke-width="1"/>`;
+    grid+=`<text x="${padL-12}" y="${y+4}" text-anchor="end" fill="#64748b" font-size="11" font-family="monospace">${formatInt(t)}</text>`;
+  });
+  xTicks.forEach(t=>{
+    const x=xFor(t);
+    grid+=`<line x1="${x}" y1="${padT}" x2="${x}" y2="${height-padB}" stroke="#111827" stroke-width="1"/>`;
+    grid+=`<text x="${x}" y="${height-padB+24}" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="monospace">${t}</text>`;
+  });
+
+  svg.innerHTML=`
+    <rect x="0" y="0" width="${width}" height="${height}" fill="#060a14" rx="10"/>
+    ${grid}
+    <line x1="${padL}" y1="${height-padB}" x2="${width-padR}" y2="${height-padB}" stroke="#2a3a55" stroke-width="2"/>
+    <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${height-padB}" stroke="#2a3a55" stroke-width="2"/>
+    <text x="${padL+plotW/2}" y="${height-14}" text-anchor="middle" fill="#e2e8f0" font-size="13" font-family="Georgia, serif">Number of vertices (n)</text>
+    <text x="18" y="${padT+plotH/2}" text-anchor="middle" fill="#e2e8f0" font-size="13" font-family="Georgia, serif" transform="rotate(-90 18 ${padT+plotH/2})">Number of operations / growth</text>
+    <text x="${width-padR-8}" y="${padT+18}" text-anchor="end" fill="#64748b" font-size="10" font-family="monospace">Y-axis uses log scale so both curves fit clearly</text>
+
+    <polyline points="${brutePts.join(' ')}" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="${localPts.join(' ')}" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <line x1="${activeX}" y1="${padT}" x2="${activeX}" y2="${height-padB}" stroke="#334155" stroke-width="1.5" stroke-dasharray="5,5"/>
+    <circle cx="${activeX}" cy="${bruteY}" r="7" fill="#ef4444" stroke="#fecaca" stroke-width="2"/>
+    <circle cx="${activeX}" cy="${localY}" r="7" fill="#10b981" stroke="#bbf7d0" stroke-width="2"/>
+
+    <rect x="${Math.min(activeX+12,width-260)}" y="${Math.max(34,Math.min(bruteY-38,height-130))}" width="230" height="78" rx="8" fill="#0b0f1a" stroke="#2a3a55"/>
+    <text x="${Math.min(activeX+24,width-248)}" y="${Math.max(58,Math.min(bruteY-14,height-106))}" fill="#e2e8f0" font-size="12" font-family="monospace">n = ${activeN}</text>
+    <text x="${Math.min(activeX+24,width-248)}" y="${Math.max(80,Math.min(bruteY+8,height-84))}" fill="#fca5a5" font-size="12" font-family="monospace">Brute force: ${formatInt(bruteValue)}</text>
+    <text x="${Math.min(activeX+24,width-248)}" y="${Math.max(102,Math.min(bruteY+30,height-62))}" fill="#6ee7b7" font-size="12" font-family="monospace">Local search: ≈ ${formatInt(localValue)}</text>
+
+    <text x="${width-188}" y="${height-padB-182}" fill="#fca5a5" font-size="12" font-family="monospace">Brute Force: y = 2ⁿ</text>
+    <text x="${width-188}" y="${height-padB-158}" fill="#6ee7b7" font-size="12" font-family="monospace">Local Search: y ≈ n²</text>
+  `;
 }
 
 window.addEventListener('load', () => { updateCmpGrowth(); showTriangleCase('nae-good'); });
