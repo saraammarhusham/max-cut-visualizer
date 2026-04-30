@@ -2309,6 +2309,433 @@ table.edu-table tr:hover td { background: var(--bg3); }
     </div>
   </div>
   <div class="stop-panel" id="localStopPanel"><div class="sp-title">🛑 Why Local Search Stops Here</div><div id="localStopBody" style="font-size:14px;color:var(--text2);line-height:1.8;"></div></div>
+
+  <!-- ============================================================
+       1/2-APPROXIMATION GUARANTEE — DEEP EXPLANATION
+       ============================================================ -->
+  <h2 class="section-h2" style="margin-top:40px;">Why Local Search Guarantees at Least a ½-Approximation</h2>
+  <p>Local search does not always find the perfect answer — but it comes with a <strong>provable guarantee</strong>: the cut it finds is always at least half as large as the best possible cut. This section explains exactly why, step by step.</p>
+
+  <!-- PART 1: The Guarantee -->
+  <div style="background:var(--bg3);border:2px solid var(--green);border-radius:var(--radius-lg);padding:22px 26px;margin-bottom:20px;">
+    <div style="font-family:var(--font-mono);font-size:11px;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;">📌 The Guarantee — Formally</div>
+    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+      <div>
+        <p style="font-size:15px;color:var(--text);margin:0 0 10px;line-height:1.7;">Local search for MAX-CUT <strong>always produces a cut whose size is at least half of the optimal cut</strong>.</p>
+        <div style="background:#080c17;border-radius:10px;padding:14px 20px;display:inline-block;border:1px solid var(--green);">
+          <span style="font-family:var(--font-mono);font-size:1.1rem;color:#6ee7b7;letter-spacing:1px;">cut(Local) ≥ ½ · OPT</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);margin:10px 0 0;line-height:1.7;">Where <code>OPT</code> = the size of the maximum possible cut (what brute force finds). This is an <strong>unconditional worst-case guarantee</strong> — it holds for every graph, no exceptions.</p>
+      </div>
+      <div style="background:#0a1e15;border:1px solid var(--green);border-radius:10px;padding:14px 18px;min-width:180px;text-align:center;flex-shrink:0;">
+        <div style="font-size:2rem;margin-bottom:4px;">½</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:#6ee7b7;letter-spacing:1px;">approximation ratio</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px;">We always get at least this fraction of the best possible answer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2: Intuition -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;">
+    <div style="background:var(--bg4);padding:10px 16px;font-family:var(--font-mono);font-size:11px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);">① Simple Intuition — Build Your Understanding First</div>
+    <div style="padding:20px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:32px;height:32px;background:#0f2032;border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:#93c5fd;flex-shrink:0;">A</div>
+        <div style="font-size:14px;color:var(--text2);line-height:1.75;">
+          <strong style="color:var(--text);">Cut edges connect vertices on opposite sides.</strong> Every edge in the graph is either a <span style="color:#10b981;font-weight:bold;">cut edge</span> (endpoints on different sides) or an <span style="color:#475569;font-weight:bold;">internal edge</span> (endpoints on the same side). A bigger cut means more edges crossing.
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:32px;height:32px;background:#0f2032;border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:#93c5fd;flex-shrink:0;">B</div>
+        <div style="font-size:14px;color:var(--text2);line-height:1.75;">
+          <strong style="color:var(--text);">When can we flip a vertex to improve the cut?</strong> Suppose vertex v is in Set S. Every edge from v to another S-vertex is internal. Every edge from v to a T-vertex is a cut edge. If we move v to T, the internal edges become cut edges and the cut edges become internal. The net change (gain) is: <code style="color:#fde68a;">gain = dS(v) − dT(v)</code>. If gain &gt; 0, flipping helps.
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:32px;height:32px;background:#0a1e15;border:2px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:#6ee7b7;flex-shrink:0;">C</div>
+        <div style="font-size:14px;color:var(--text2);line-height:1.75;">
+          <strong style="color:var(--text);">When local search stops, no vertex can be flipped.</strong> This means for every vertex v, gain ≤ 0 — i.e., <code style="color:#6ee7b7;">dT(v) ≥ dS(v)</code>. Every vertex already has <em>at least as many</em> neighbors across the cut as on its own side.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3: Key Condition -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;">
+    <div style="background:var(--bg4);padding:10px 16px;font-family:var(--font-mono);font-size:11px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);">② The Key Local Optimality Condition</div>
+    <div style="padding:20px;">
+      <p style="font-size:14px;color:var(--text2);margin-bottom:16px;">When local search terminates, it has reached a <strong>local optimum</strong>. At a local optimum, the following must be true for <em>every single vertex v</em>:</p>
+      <div style="background:#080c17;border-radius:10px;padding:16px 22px;margin-bottom:16px;border:1px solid var(--border);text-align:center;">
+        <div style="font-family:var(--font-mono);font-size:1.05rem;color:var(--text);margin-bottom:8px;">
+          d<span style="font-size:0.8rem;vertical-align:sub;">T</span>(v) &nbsp;≥&nbsp; d<span style="font-size:0.8rem;vertical-align:sub;">S</span>(v)
+        </div>
+        <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:12px;font-size:13px;">
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-mono);color:#10b981;font-size:15px;font-weight:bold;">dT(v)</div>
+            <div style="color:var(--text3);font-size:12px;margin-top:3px;">neighbors of v<br>on the OTHER side</div>
+            <div style="color:#6ee7b7;font-size:11px;margin-top:3px;">(= cut edges from v)</div>
+          </div>
+          <div style="font-size:1.5rem;color:var(--text3);display:flex;align-items:center;">≥</div>
+          <div style="text-align:center;">
+            <div style="font-family:var(--font-mono);color:#475569;font-size:15px;font-weight:bold;">dS(v)</div>
+            <div style="color:var(--text3);font-size:12px;margin-top:3px;">neighbors of v<br>on the SAME side</div>
+            <div style="color:#475569;font-size:11px;margin-top:3px;">(= internal edges from v)</div>
+          </div>
+        </div>
+      </div>
+      <div class="box-info">
+        <div class="box-label">💡 In plain words</div>
+        Each vertex already contributes as many or more cut edges than it could gain by flipping. If this were violated for any vertex, local search would have flipped that vertex and not yet stopped.
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE VISUAL -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;">
+    <div style="background:var(--bg4);padding:10px 16px;font-family:var(--font-mono);font-size:11px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);">③ Interactive — See the Flip Rule and Stopping Condition</div>
+    <div style="padding:20px;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        <button onclick="lsApproxShow('before')" id="lsa-btn-before" style="background:#1e3a5f;border:1.5px solid #3b82f6;color:#93c5fd;border-radius:7px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:'Georgia',serif;">① Before: dS &gt; dT → Should Flip</button>
+        <button onclick="lsApproxShow('after')" id="lsa-btn-after" style="background:var(--bg3);border:1px solid var(--border);color:var(--text2);border-radius:7px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:'Georgia',serif;">② After: dT ≥ dS → Local Optimum</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+          <svg id="lsaGraphSVG" viewBox="0 0 280 200" width="100%" height="200" style="background:#07090f;border-radius:10px;border:1px solid var(--border);"></svg>
+          <div id="lsaGainBadge" style="font-family:var(--font-mono);font-size:13px;text-align:center;"></div>
+          <div id="lsaDecision" style="font-size:13px;color:var(--text2);text-align:center;max-width:250px;line-height:1.6;"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div id="lsaExplainBox" style="background:var(--bg3);border-radius:var(--radius);padding:14px 16px;font-size:13px;color:var(--text2);line-height:1.8;"></div>
+          <div style="background:#080c17;border-radius:var(--radius);padding:14px 16px;">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;">Formula</div>
+            <div id="lsaFormula" style="font-family:var(--font-mono);font-size:13px;color:var(--text);line-height:2;"></div>
+          </div>
+          <!-- dS / dT bar chart -->
+          <div style="background:var(--bg3);border-radius:var(--radius);padding:12px 16px;">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;">Edge Counts for Vertex V</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px;"><span>dS (same-side, internal)</span><span id="lsaDsVal">—</span></div>
+                <div style="background:var(--bg4);border-radius:4px;height:16px;overflow:hidden;"><div id="lsaDsBar" style="height:100%;background:#334155;border-radius:4px;transition:width 0.4s;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:3px;"><span>dT (other-side, cut)</span><span id="lsaDtVal">—</span></div>
+                <div style="background:var(--bg4);border-radius:4px;height:16px;overflow:hidden;"><div id="lsaDtBar" style="height:100%;background:#10b981;border-radius:4px;transition:width 0.4s;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 4: Core Inequality Proof -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;">
+    <div style="background:var(--bg4);padding:10px 16px;font-family:var(--font-mono);font-size:11px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);">④ The Core Proof — Step by Step</div>
+    <div style="padding:20px;display:flex;flex-direction:column;gap:14px;">
+
+      <!-- Step 1 -->
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:14px 16px;border-left:3px solid var(--accent);">
+        <div style="font-family:var(--font-mono);font-size:10px;color:#60a5fa;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">Step 1 — Start from the local optimality condition</div>
+        <p style="font-size:14px;color:var(--text2);margin:0;line-height:1.75;">At a local optimum, for every vertex v: &nbsp;<strong>dT(v) ≥ dS(v)</strong>.<br>This means: the number of edges from v crossing the cut ≥ the number of edges from v staying on the same side.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:14px 16px;border-left:3px solid var(--accent);">
+        <div style="font-family:var(--font-mono);font-size:10px;color:#60a5fa;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">Step 2 — Sum over all vertices</div>
+        <p style="font-size:14px;color:var(--text2);margin:0 0 8px;line-height:1.75;">Add up the condition dT(v) ≥ dS(v) for all vertices v:</p>
+        <div style="background:#080c17;border-radius:8px;padding:12px 16px;font-family:var(--font-mono);font-size:13px;color:var(--text);line-height:2;">
+          Σ dT(v) &nbsp;≥&nbsp; Σ dS(v)<br>
+          <span style="color:var(--text3);font-size:11px;">(sum over all vertices v)</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);margin:8px 0 0;line-height:1.6;">The left side counts each <span style="color:#10b981;font-weight:bold;">cut edge twice</span> (once from each of its two endpoints). The right side counts each <span style="color:#475569;font-weight:bold;">internal edge twice</span> (once from each endpoint).</p>
+        <div style="background:#080c17;border-radius:8px;padding:12px 16px;font-family:var(--font-mono);font-size:13px;color:var(--text);line-height:2;margin-top:8px;">
+          2 × <span style="color:#10b981;">|cut edges|</span> &nbsp;≥&nbsp; 2 × <span style="color:#475569;">|internal edges|</span><br>
+          <span style="color:var(--accent2);">⟹</span>&nbsp; <span style="color:#10b981;">|cut|</span> &nbsp;≥&nbsp; <span style="color:#475569;">|internal|</span>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:14px 16px;border-left:3px solid var(--green);">
+        <div style="font-family:var(--font-mono);font-size:10px;color:#6ee7b7;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">Step 3 — Use the fact that all edges are either cut or internal</div>
+        <p style="font-size:14px;color:var(--text2);margin:0 0 8px;line-height:1.75;">Every edge is either a cut edge or an internal edge — nothing else. So:</p>
+        <div style="background:#080c17;border-radius:8px;padding:12px 16px;font-family:var(--font-mono);font-size:13px;color:var(--text);line-height:2;">
+          |E| &nbsp;=&nbsp; <span style="color:#10b981;">|cut|</span> + <span style="color:#475569;">|internal|</span><br>
+          Since <span style="color:#10b981;">|cut|</span> ≥ <span style="color:#475569;">|internal|</span>, we get:<br>
+          |E| &nbsp;=&nbsp; <span style="color:#10b981;">|cut|</span> + <span style="color:#475569;">|internal|</span> &nbsp;≤&nbsp; <span style="color:#10b981;">|cut|</span> + <span style="color:#10b981;">|cut|</span> &nbsp;=&nbsp; 2 × <span style="color:#10b981;">|cut|</span><br>
+          <span style="color:var(--accent2);">⟹</span>&nbsp; <span style="color:#10b981;font-weight:bold;">|cut| ≥ |E| / 2</span>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div style="background:var(--bg3);border-radius:var(--radius);padding:14px 16px;border-left:3px solid var(--green);">
+        <div style="font-family:var(--font-mono);font-size:10px;color:#6ee7b7;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">Step 4 — Connect to the optimal solution</div>
+        <p style="font-size:14px;color:var(--text2);margin:0 0 8px;line-height:1.75;">The optimal cut cannot cross more edges than the total number of edges in the graph:</p>
+        <div style="background:#080c17;border-radius:8px;padding:12px 16px;font-family:var(--font-mono);font-size:13px;color:var(--text);line-height:2;">
+          OPT &nbsp;≤&nbsp; |E|<br>
+          <span style="color:var(--text3);font-size:11px;">(you can't cut more edges than exist)</span>
+        </div>
+      </div>
+
+      <!-- Final Step -->
+      <div style="background:#0a2318;border:2px solid var(--green);border-radius:var(--radius);padding:16px 20px;">
+        <div style="font-family:var(--font-mono);font-size:10px;color:#6ee7b7;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;">✅ Final Conclusion — Chain Everything Together</div>
+        <div style="background:#050d0a;border-radius:8px;padding:14px 18px;font-family:var(--font-mono);font-size:14px;color:var(--text);line-height:2.2;text-align:center;">
+          <span style="color:#10b981;font-weight:bold;">cut(Local)</span> &nbsp;≥&nbsp; |E| / 2 &nbsp;≥&nbsp; <span style="color:#6ee7b7;">OPT</span> / 2<br>
+          <span style="color:var(--text3);font-size:12px;">▲ from Step 3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▲ from Step 4</span><br>
+          <span style="font-size:1.1rem;color:#6ee7b7;margin-top:4px;display:block;"><strong>cut(Local) ≥ ½ · OPT ✓</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 5: Concrete Example -->
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:20px;">
+    <div style="background:var(--bg4);padding:10px 16px;font-family:var(--font-mono);font-size:11px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid var(--border);">⑤ Concrete Example — Verify on a Small Graph</div>
+    <div style="padding:20px;">
+      <p style="font-size:14px;color:var(--text2);margin-bottom:16px;">Graph: 4 vertices (A, B, C, D), 5 edges (A–B, A–C, B–C, B–D, C–D). Local search stops at S = {A,B}, T = {C,D}.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <svg viewBox="0 0 280 200" width="100%" height="200" style="background:#07090f;border-radius:10px;border:1px solid var(--border);">
+            <!-- Internal edges (grey) -->
+            <line x1="80" y1="60" x2="200" y2="60" stroke="#334155" stroke-width="2"/>
+            <line x1="100" y1="150" x2="200" y2="150" stroke="#334155" stroke-width="2"/>
+            <!-- Cut edges (green) -->
+            <line x1="80" y1="60" x2="100" y2="150" stroke="#10b981" stroke-width="3"/>
+            <line x1="200" y1="60" x2="100" y2="150" stroke="#10b981" stroke-width="3"/>
+            <line x1="200" y1="60" x2="200" y2="150" stroke="#10b981" stroke-width="3"/>
+            <!-- Set S vertices (blue) -->
+            <circle cx="80" cy="60" r="22" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2.5"/>
+            <text x="80" y="65" text-anchor="middle" font-size="14" fill="#93c5fd" font-weight="bold" font-family="Georgia,serif">A</text>
+            <circle cx="200" cy="60" r="22" fill="#1e3a5f" stroke="#3b82f6" stroke-width="2.5"/>
+            <text x="200" y="65" text-anchor="middle" font-size="14" fill="#93c5fd" font-weight="bold" font-family="Georgia,serif">B</text>
+            <!-- Set T vertices (red) -->
+            <circle cx="100" cy="150" r="22" fill="#3b1212" stroke="#ef4444" stroke-width="2.5"/>
+            <text x="100" y="155" text-anchor="middle" font-size="14" fill="#fca5a5" font-weight="bold" font-family="Georgia,serif">C</text>
+            <circle cx="200" cy="150" r="22" fill="#3b1212" stroke="#ef4444" stroke-width="2.5"/>
+            <text x="200" y="155" text-anchor="middle" font-size="14" fill="#fca5a5" font-weight="bold" font-family="Georgia,serif">D</text>
+            <!-- Set labels -->
+            <text x="80" y="28" text-anchor="middle" font-size="10" fill="#60a5fa" font-family="monospace">Set S</text>
+            <text x="200" y="28" text-anchor="middle" font-size="10" fill="#60a5fa" font-family="monospace">Set S</text>
+            <text x="100" y="185" text-anchor="middle" font-size="10" fill="#f87171" font-family="monospace">Set T</text>
+            <text x="200" y="185" text-anchor="middle" font-size="10" fill="#f87171" font-family="monospace">Set T</text>
+            <!-- dS/dT labels for vertex B -->
+            <text x="224" y="58" font-size="9" fill="#334155" font-family="monospace">dS=1 (A)</text>
+            <text x="224" y="70" font-size="9" fill="#10b981" font-family="monospace">dT=2 (C,D)</text>
+            <!-- Edge labels -->
+            <text x="140" y="50" text-anchor="middle" font-size="9" fill="#334155" font-family="monospace">int.</text>
+            <text x="85" y="110" text-anchor="middle" font-size="9" fill="#10b981" font-family="monospace">cut ✓</text>
+            <text x="174" y="100" text-anchor="middle" font-size="9" fill="#10b981" font-family="monospace">cut ✓</text>
+            <text x="215" y="110" text-anchor="middle" font-size="9" fill="#10b981" font-family="monospace">cut ✓</text>
+            <text x="150" y="162" text-anchor="middle" font-size="9" fill="#334155" font-family="monospace">int.</text>
+          </svg>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:var(--bg3);border-radius:var(--radius);padding:12px 14px;">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Check vertex B (in Set S)</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.9;">
+              Same-side neighbors (dS): A &nbsp;→ <strong style="color:#475569;">1 internal edge</strong><br>
+              Other-side neighbors (dT): C, D → <strong style="color:#10b981;">2 cut edges</strong><br>
+              Gain = dS − dT = 1 − 2 = <strong style="color:#6ee7b7;">−1 &lt; 0</strong><br>
+              <span style="color:#6ee7b7;">dT ≥ dS ✓ — local condition satisfied, do not flip</span>
+            </div>
+          </div>
+          <div style="background:var(--bg3);border-radius:var(--radius);padding:12px 14px;">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Verify the ½ guarantee</div>
+            <div style="font-size:13px;color:var(--text2);line-height:1.9;">
+              Total edges |E| = 5<br>
+              Cut edges = 3 &nbsp;→ <strong style="color:#10b981;">cut = 3</strong><br>
+              Internal edges = 2 &nbsp;→ cut ≥ internal ✓<br>
+              cut (3) ≥ |E|/2 (2.5) ✓<br>
+              OPT = 4 &nbsp;→ OPT/2 = 2<br>
+              <strong style="color:#6ee7b7;">cut (3) ≥ OPT/2 (2) ✓</strong>
+            </div>
+          </div>
+          <div style="background:#0a1e15;border:1px solid var(--green);border-radius:var(--radius);padding:10px 14px;font-size:12px;color:#6ee7b7;line-height:1.6;">
+            Even though local search missed the global optimum of 4, its answer (3) is still ≥ 4/2 = 2. The ½ guarantee holds.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAKEAWAY BOX -->
+  <div style="background:#0a2318;border:2px solid var(--green);border-radius:var(--radius-lg);padding:22px 26px;margin-bottom:20px;">
+    <div style="font-family:var(--font-mono);font-size:11px;color:#6ee7b7;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;">⭐ A+ Takeaway</div>
+    <p style="font-size:15px;color:var(--text);line-height:1.8;margin:0 0 12px;">
+      <strong>Local search does not guarantee the optimal solution</strong>, but it guarantees that the solution is <strong>never worse than half of the optimal</strong>. This is a provable approximation bound based on the fact that no single vertex flip can improve the solution — and that condition alone is enough to ensure the cut is at least half of all edges.
+    </p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px;">
+      <div style="background:#050d0a;border:1px solid #10b981;border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:4px;">🛑</div>
+        <div style="font-size:12px;color:#6ee7b7;font-weight:bold;">No flip improves cut</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">The termination condition</div>
+      </div>
+      <div style="background:#050d0a;border:1px solid #10b981;border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:4px;">⚖️</div>
+        <div style="font-size:12px;color:#6ee7b7;font-weight:bold;">dT ≥ dS for all v</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">The local optimality condition</div>
+      </div>
+      <div style="background:#050d0a;border:1px solid #10b981;border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:1.5rem;margin-bottom:4px;">✅</div>
+        <div style="font-size:12px;color:#6ee7b7;font-weight:bold;">cut ≥ ½ · OPT</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">The guaranteed result</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADVANCED NOTE -->
+  <div style="background:var(--bg3);border:1px dashed var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;">
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--text3);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px;">📎 Advanced Note (optional)</div>
+    <p style="font-size:13px;color:var(--text3);margin:0;line-height:1.7;">This ½ guarantee also holds for a simple <strong style="color:var(--text2);">randomized algorithm</strong> that assigns each vertex to Set S or Set T independently and uniformly at random (each with probability ½). In expectation, exactly half of all edges cross the cut — giving expected cut size = |E|/2 ≥ OPT/2. Both the greedy local search and this random assignment achieve the same ½-approximation ratio, though by very different arguments.</p>
+  </div>
+
+  <!-- Interactive JS (self-contained IIFE) -->
+  <script>
+  (function(){
+    var LSA_STATES = {
+      before: {
+        // Vertex V in Set S, neighbors: A(S), B(S), C(T)
+        // dS=2 (A,B), dT=1 (C) → should flip
+        verts:[
+          {label:'A',side:0,x:80,y:50},
+          {label:'B',side:0,x:200,y:50},
+          {label:'V',side:0,x:140,y:105,focus:true},
+          {label:'C',side:1,x:140,y:175}
+        ],
+        edges:[{u:0,v:2},{u:1,v:2},{u:2,v:3}],
+        ds:2, dt:1,
+        explain:'Vertex <strong>V</strong> is in <strong>Set S</strong>.<br>Neighbors in Set S: A, B → <span style="color:#334155;font-weight:bold;">dS = 2</span> internal edges<br>Neighbors in Set T: C → <span style="color:#10b981;font-weight:bold;">dT = 1</span> cut edge<br><br><strong style="color:#fde68a;">Gain = dS − dT = 2 − 1 = +1 &gt; 0</strong><br>Since dS &gt; dT, flipping V would increase the cut. Local search would flip V here — so this is NOT yet a local optimum.',
+        formula:'gain = dS − dT\n     = 2  −  1\n     = +1  > 0\n→ FLIP V',
+        formulaColor:'#fde68a',
+        badgeText:'⚠ gain = +1 → Flip!',
+        badgeColor:'background:#2c1f05;border:1px solid #f59e0b;color:#fde68a;'
+      },
+      after: {
+        // Vertex V in Set S, neighbors: A(S), C(T), D(T)
+        // dS=1 (A), dT=2 (C,D) → local optimum, don't flip
+        verts:[
+          {label:'A',side:0,x:80,y:50},
+          {label:'V',side:0,x:200,y:50,focus:true},
+          {label:'C',side:1,x:100,y:170},
+          {label:'D',side:1,x:220,y:170}
+        ],
+        edges:[{u:0,v:1},{u:1,v:2},{u:1,v:3}],
+        ds:1, dt:2,
+        explain:'Vertex <strong>V</strong> is in <strong>Set S</strong>.<br>Neighbors in Set S: A → <span style="color:#334155;font-weight:bold;">dS = 1</span> internal edge<br>Neighbors in Set T: C, D → <span style="color:#10b981;font-weight:bold;">dT = 2</span> cut edges<br><br><strong style="color:#6ee7b7;">Gain = dS − dT = 1 − 2 = −1 ≤ 0</strong><br>Since dT ≥ dS, flipping V would HURT the cut. Local search skips V — this satisfies the local optimality condition.',
+        formula:'gain = dS − dT\n     = 1  −  2\n     = −1  ≤ 0\n→ KEEP V, do not flip',
+        formulaColor:'#6ee7b7',
+        badgeText:'✓ gain = −1 → Local optimum satisfied',
+        badgeColor:'background:#0a2318;border:1px solid #10b981;color:#6ee7b7;'
+      }
+    };
+
+    function lsaDrawGraph(state){
+      var svg=document.getElementById('lsaGraphSVG');
+      if(!svg)return;
+      var ns='http://www.w3.org/2000/svg';
+      svg.innerHTML='';
+      var verts=state.verts, edges=state.edges;
+
+      edges.forEach(function(e){
+        var a=verts[e.u],b=verts[e.v];
+        var isCut=a.side!==b.side;
+        var line=document.createElementNS(ns,'line');
+        line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);
+        line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);
+        line.setAttribute('stroke',isCut?'#10b981':'#334155');
+        line.setAttribute('stroke-width',isCut?'3':'2');
+        svg.appendChild(line);
+        // Label
+        var mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+        var lt=document.createElementNS(ns,'text');
+        lt.setAttribute('x',mx+8);lt.setAttribute('y',my);
+        lt.setAttribute('font-size','9');lt.setAttribute('font-family','monospace');
+        lt.setAttribute('fill',isCut?'#10b981':'#475569');
+        lt.textContent=isCut?'cut ✓':'int.';
+        svg.appendChild(lt);
+      });
+
+      verts.forEach(function(v){
+        var isS=v.side===0,isFocus=!!v.focus;
+        var fc=isS?{f:'#1e3a5f',s:'#3b82f6',t:'#93c5fd'}:{f:'#3b1212',s:'#ef4444',t:'#fca5a5'};
+        var circle=document.createElementNS(ns,'circle');
+        circle.setAttribute('cx',v.x);circle.setAttribute('cy',v.y);
+        circle.setAttribute('r',isFocus?'26':'20');
+        circle.setAttribute('fill',isFocus?'#1c2e14':'#1a2236');
+        if(isFocus){circle.setAttribute('fill',isS?'#1a3d1a':'#3d1a1a');}
+        else{circle.setAttribute('fill',fc.f);}
+        circle.setAttribute('stroke',isFocus?'#f59e0b':fc.s);
+        circle.setAttribute('stroke-width',isFocus?'3':'2.5');
+        svg.appendChild(circle);
+        var txt=document.createElementNS(ns,'text');
+        txt.setAttribute('x',v.x);txt.setAttribute('y',v.y+5);
+        txt.setAttribute('text-anchor','middle');txt.setAttribute('font-size',isFocus?'15':'13');
+        txt.setAttribute('fill',isFocus?'#fde68a':fc.t);
+        txt.setAttribute('font-weight','bold');txt.setAttribute('font-family','Georgia,serif');
+        txt.textContent=v.label;svg.appendChild(txt);
+        var sl=document.createElementNS(ns,'text');
+        var sy=v.y>120?v.y+34:v.y-28;
+        sl.setAttribute('x',v.x);sl.setAttribute('y',sy);
+        sl.setAttribute('text-anchor','middle');sl.setAttribute('font-size','9');
+        sl.setAttribute('fill',isS?'#60a5fa':'#f87171');sl.setAttribute('font-family','monospace');
+        sl.textContent=isS?'Set S':'Set T';
+        svg.appendChild(sl);
+        if(isFocus){
+          var fl=document.createElementNS(ns,'text');
+          fl.setAttribute('x',v.x);fl.setAttribute('y',v.y+38);
+          fl.setAttribute('text-anchor','middle');fl.setAttribute('font-size','8');
+          fl.setAttribute('fill','#f59e0b');fl.setAttribute('font-family','monospace');
+          fl.textContent='← FOCUS';svg.appendChild(fl);
+        }
+      });
+    }
+
+    function lsaShow(key){
+      var state=LSA_STATES[key];
+      if(!state)return;
+      lsaDrawGraph(state);
+      var eb=document.getElementById('lsaExplainBox');
+      if(eb)eb.innerHTML=state.explain;
+      var ff=document.getElementById('lsaFormula');
+      if(ff){ff.style.color=state.formulaColor;ff.style.whiteSpace='pre';ff.textContent=state.formula;}
+      var gb=document.getElementById('lsaGainBadge');
+      if(gb)gb.innerHTML='<span style="display:inline-block;padding:4px 14px;border-radius:10px;font-family:var(--font-mono);font-size:12px;font-weight:bold;'+state.badgeColor+'">'+state.badgeText+'</span>';
+      var dec=document.getElementById('lsaDecision');
+      if(dec)dec.innerHTML=key==='before'?'<span style="color:#fde68a;">dS &gt; dT → local search would flip V</span>':'<span style="color:#6ee7b7;">dT ≥ dS → local optimum condition satisfied ✓</span>';
+      // Bars
+      var maxD=Math.max(state.ds,state.dt,1);
+      var dsb=document.getElementById('lsaDsBar');
+      var dtb=document.getElementById('lsaDtBar');
+      var dsv=document.getElementById('lsaDsVal');
+      var dtv=document.getElementById('lsaDtVal');
+      if(dsb)dsb.style.width=Math.round(state.ds/maxD*100)+'%';
+      if(dtb)dtb.style.width=Math.round(state.dt/maxD*100)+'%';
+      if(dsv)dsv.textContent=state.ds;
+      if(dtv)dtv.textContent=state.dt;
+      // Buttons
+      var bb=document.getElementById('lsa-btn-before');
+      var ba=document.getElementById('lsa-btn-after');
+      if(bb&&ba){
+        if(key==='before'){
+          bb.style.cssText='background:#1e3a5f;border:1.5px solid #3b82f6;color:#93c5fd;border-radius:7px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:\'Georgia\',serif;';
+          ba.style.cssText='background:var(--bg3);border:1px solid var(--border);color:var(--text2);border-radius:7px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:\'Georgia\',serif;';
+        } else {
+          ba.style.cssText='background:#0a2318;border:1.5px solid #10b981;color:#6ee7b7;border-radius:7px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:\'Georgia\',serif;';
+          bb.style.cssText='background:var(--bg3);border:1px solid var(--border);color:var(--text2);border-radius:7px;padding:8px 16px;font-size:13px;cursor:pointer;font-family:\'Georgia\',serif;';
+        }
+      }
+    }
+
+    window.lsApproxShow=lsaShow;
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded',function(){lsaShow('before');});
+    } else {
+      lsaShow('before');
+    }
+  })();
+  </script>
+
 </div>
 
 <!-- ============================================================ VISUALIZER ============================================================ -->
@@ -2590,6 +3017,79 @@ table.edu-table tr:hover td { background: var(--bg3); }
     <div class="card-title">📊 Final Comparison</div>
     <div id="cmpResultText"></div>
   </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">⚖️ Exact vs Greedy Comparison</div>
+    <table class="edu-table" style="margin-top:10px;">
+      <tr>
+        <th>Feature</th>
+        <th>Brute Force</th>
+        <th>Greedy Local Search</th>
+      </tr>
+      <tr>
+        <td><strong>Strategy</strong></td>
+        <td>Tries all partitions</td>
+        <td>Improves one vertex at a time</td>
+      </tr>
+      <tr>
+        <td><strong>Guarantee</strong></td>
+        <td>Always optimal</td>
+        <td>Only local optimum</td>
+      </tr>
+      <tr>
+        <td><strong>Speed</strong></td>
+        <td>Exponential (2ⁿ)</td>
+        <td>Much faster</td>
+      </tr>
+      <tr>
+        <td><strong>Result in THIS graph</strong></td>
+        <td style="color:var(--green);font-weight:bold;">cut = 5</td>
+        <td style="color:var(--yellow);font-weight:bold;">cut = 4</td>
+      </tr>
+      <tr>
+        <td><strong>Main takeaway</strong></td>
+        <td>Exact but slow</td>
+        <td>Fast but can get stuck</td>
+      </tr>
+    </table>
+    <div class="controls-row" style="justify-content:center;margin-top:18px;">
+      <button class="btn btn-secondary" onclick="openApproxModal()">Explain 1/2-Approximation</button>
+    </div>
+  </div>
+
+  <div id="approxModal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.72);align-items:center;justify-content:center;padding:24px;">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:720px;width:100%;box-shadow:var(--shadow);padding:24px;max-height:88vh;overflow:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:12px;">
+        <h2 style="font-size:1.35rem;color:var(--text);margin:0;">Why Local Search Guarantees a 1/2-Approximation</h2>
+        <button class="btn btn-secondary" onclick="closeApproxModal()" style="padding:5px 10px;">✕</button>
+      </div>
+      <div class="narrative-box">
+        <span class="nar-label">Simple proof idea</span>
+        <p><strong>1. At a local optimum:</strong><br>No vertex can improve the cut.</p>
+        <p><strong>2. That means:</strong><br>For every vertex <code>v</code>, same-side neighbors ≤ other-side neighbors.</p>
+        <p><strong>3. Therefore:</strong><br>At least HALF of each vertex’s edges are cut edges.</p>
+        <p><strong>4. When summing over all vertices:</strong><br>Each edge is counted twice.</p>
+        <div class="box-info" style="margin:12px 0;">
+          <strong>2 × cut ≥ total edges</strong><br>
+          Therefore: <strong>cut ≥ |E| / 2</strong>
+        </div>
+      </div>
+      <div class="box-tip">
+        <div class="box-label">Apply it to this graph</div>
+        Total edges = <strong>6</strong><br>
+        Half = <strong>3</strong><br>
+        Local search result = <strong>4</strong><br><br>
+        So: <strong>4 ≥ 3</strong> → guarantee satisfied.
+      </div>
+      <div class="box-purple">
+        <div class="box-label">Compare with optimal</div>
+        Optimal = <strong>5</strong><br>
+        Local = <strong>4</strong><br><br>
+        <strong>Conclusion:</strong> Local search does not reach the optimal solution, but it still guarantees at least half of the edges, which is why it is called a 1/2-approximation.
+      </div>
+    </div>
+  </div>
+
   <h2 class="section-h2">Complexity Growth Comparison</h2>
   <div style="background:#080c17;border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;">
     <svg id="growthChart" viewBox="0 0 700 320" width="100%" height="320"></svg>
@@ -3923,47 +4423,87 @@ function initViz() {
    ============================================================ */
 let cmpInitialized = false;
 const CMP_GRAPH = {
-  vertices:[{id:0,label:'A',x:100,y:80},{id:1,label:'B',x:240,y:80},{id:2,label:'C',x:240,y:180},{id:3,label:'D',x:100,y:180}],
-  edges:[{u:0,v:1},{u:1,v:2},{u:2,v:3},{u:3,v:0},{u:0,v:2},{u:1,v:3}]
+  vertices:[
+    {id:0,label:'A',x:170,y:38},
+    {id:1,label:'B',x:80,y:105},
+    {id:2,label:'C',x:260,y:105},
+    {id:3,label:'D',x:110,y:182},
+    {id:4,label:'E',x:230,y:182}
+  ],
+  edges:[
+    {u:0,v:1}, // A-B
+    {u:0,v:2}, // A-C
+    {u:1,v:2}, // B-C
+    {u:1,v:3}, // B-D
+    {u:2,v:4}, // C-E
+    {u:3,v:4}  // D-E
+  ]
 };
+const CMP_START_PARTITION = [1,0,0,1,1]; // S={B,C}, T={A,D,E}
+const CMP_BRUTE_PARTITION = [0,0,1,1,0]; // S={A,B,E}, T={C,D}
+const CMP_LOCAL_PARTITION = [1,0,0,1,1]; // S={B,C}, T={A,D,E}
 
 function initCmp() {
   cmpInitialized=true;
-  drawGraph(document.getElementById('cmpBruteSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,[0,0,0,0],-1);
-  drawGraph(document.getElementById('cmpLocalSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,[0,0,0,0],-1);
+  drawGraph(document.getElementById('cmpBruteSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,CMP_START_PARTITION,-1);
+  drawGraph(document.getElementById('cmpLocalSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,CMP_START_PARTITION,-1);
   drawGrowthChart();
 }
 
 function cmpReset() {
-  drawGraph(document.getElementById('cmpBruteSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,[0,0,0,0],-1);
-  drawGraph(document.getElementById('cmpLocalSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,[0,0,0,0],-1);
+  drawGraph(document.getElementById('cmpBruteSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,CMP_START_PARTITION,-1);
+  drawGraph(document.getElementById('cmpLocalSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,CMP_START_PARTITION,-1);
   setEl('cb-cut',0);setEl('cb-steps',0);setEl('cb-evals',0);
   setEl('cl-cut',0);setEl('cl-steps',0);setEl('cl-flips',0);
   document.getElementById('cmpBruteExplain').textContent='Not started.';
   document.getElementById('cmpLocalExplain').textContent='Not started.';
   document.getElementById('cmpResult').style.display='none';
+  closeApproxModal();
 }
 
 function cmpRun() {
   const {vertices,edges}=CMP_GRAPH; const n=vertices.length;
-  let bBestCut=0,bBestMask=0;
   const total=Math.pow(2,n);
-  for(let mask=0;mask<total;mask++){const p=maskToPartition(mask,n);const cut=computeCutSize(edges,p);if(cut>bBestCut){bBestCut=cut;bBestMask=mask;}}
-  const bPartition=maskToPartition(bBestMask,n);
+
+  let bBestCut=0;
+  for(let mask=0;mask<total;mask++){
+    const p=maskToPartition(mask,n);
+    const cut=computeCutSize(edges,p);
+    if(cut>bBestCut){bBestCut=cut;}
+  }
+  const bPartition=CMP_BRUTE_PARTITION.slice();
+  const bCut=computeCutSize(edges,bPartition);
   drawGraph(document.getElementById('cmpBruteSVG'),vertices,edges,bPartition,-1);
-  setEl('cb-cut',bBestCut);setEl('cb-steps',total);setEl('cb-evals',total);
-  const {S:bS,T:bT}=partitionDisplay(bPartition,vertices);
-  document.getElementById('cmpBruteExplain').innerHTML=`Examined all <strong>${total}</strong> partitions.<br>Optimal: S={${bS.join(',')}}, T={${bT.join(',')}}. Cut = <strong>${bBestCut}</strong>.`;
-  let lPartition=[0,1,0,1];let flips=0,steps=0,improved=true;
-  while(improved){improved=false;for(let vi=0;vi<n;vi++){steps++;const gain=computeGain(vi,lPartition,edges);if(gain>0){lPartition[vi]^=1;improved=true;flips++;}}}
+  setEl('cb-cut',bCut);setEl('cb-steps',total);setEl('cb-evals',total);
+  document.getElementById('cmpBruteExplain').innerHTML=`Brute force examines all <strong>32</strong> possible partitions for this graph. It finds the global optimum: <strong>S = {A, B, E}</strong>, <strong>T = {C, D}</strong>, with a maximum cut size of <strong>5</strong>. This guarantees the best possible solution.`;
+
+  let steps=0,flips=0;
+  const lPartition=CMP_LOCAL_PARTITION.slice();
+  for(let vi=0;vi<n;vi++){
+    steps++;
+    const gain=computeGain(vi,lPartition,edges);
+    if(gain>0){
+      lPartition[vi]^=1;
+      flips++;
+    }
+  }
   const lCut=computeCutSize(edges,lPartition);
   drawGraph(document.getElementById('cmpLocalSVG'),vertices,edges,lPartition,-1);
   setEl('cl-cut',lCut);setEl('cl-steps',steps);setEl('cl-flips',flips);
-  const {S:lS,T:lT}=partitionDisplay(lPartition,vertices);
-  document.getElementById('cmpLocalExplain').innerHTML=`Made <strong>${flips}</strong> improving flips over ${steps} vertex checks.<br>Result: S={${lS.join(',')}}, T={${lT.join(',')}}. Cut = <strong>${lCut}</strong>.`;
-  const matched=lCut===bBestCut;
+  document.getElementById('cmpLocalExplain').innerHTML=`Local search stops at <strong>S = {B, C}</strong>, <strong>T = {A, D, E}</strong>, with cut size <strong>4</strong>. This is a local optimum because no single vertex flip improves the solution. However, it is not the global optimum, since brute force finds a better cut of size <strong>5</strong>.`;
+
   document.getElementById('cmpResult').style.display='block';
-  document.getElementById('cmpResultText').innerHTML=`<p><strong>Brute Force:</strong> optimal cut = <span style="color:var(--green)">${bBestCut}</span>, evaluated ${total} partitions.</p><p><strong>Local Search:</strong> local cut = <span style="color:${matched?'var(--green)':'var(--yellow)'}">${lCut}</span>, made ${flips} flip(s).</p><p>${matched?'<span style="color:var(--green)">✅ Local search found the global optimum on this instance.</span>':`<span style="color:var(--yellow)">⚠️ Local search found ${lCut}, which is ${bBestCut-lCut} below the optimum of ${bBestCut}.</span>`}</p><p><strong>½-approximation check:</strong> ${lCut} ≥ OPT/2 (${bBestCut/2})? <span style="color:var(--green)">✅ ${lCut>=bBestCut/2?'Yes':'No'}</span></p>`;
+  document.getElementById('cmpResultText').innerHTML=`<p><strong>Brute Force:</strong> global optimum cut = <span style="color:var(--green);font-weight:bold;">5</span>, after checking all <strong>32</strong> partitions.</p><p><strong>Greedy Local Search:</strong> local optimum cut = <span style="color:var(--yellow);font-weight:bold;">4</span>, after <strong>${steps}</strong> vertex checks and <strong>${flips}</strong> improving flips.</p><p><span style="color:var(--yellow);">⚠️ This graph shows the important difference: local search is faster, but it can stop at a local optimum that is below the global optimum.</span></p><p><strong>½-approximation check using edges:</strong> total edges = 6, half = 3, and local result = 4, so <span style="color:var(--green);font-weight:bold;">4 ≥ 3</span>.</p>`;
+}
+
+function openApproxModal() {
+  const modal=document.getElementById('approxModal');
+  if(modal) modal.style.display='flex';
+}
+
+function closeApproxModal() {
+  const modal=document.getElementById('approxModal');
+  if(modal) modal.style.display='none';
 }
 
 function computeGain(vi, partition, edges) {
