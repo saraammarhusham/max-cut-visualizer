@@ -3090,9 +3090,71 @@ table.edu-table tr:hover td { background: var(--bg3); }
     </div>
   </div>
 
-  <h2 class="section-h2">Complexity Growth Comparison</h2>
-  <div style="background:#080c17;border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;">
-    <svg id="growthChart" viewBox="0 0 700 320" width="100%" height="320"></svg>
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">📈 Algorithm Growth &amp; Complexity Analysis</div>
+    <p style="font-size:13px;margin-bottom:14px;">Adjust the number of vertices to see why brute force becomes infeasible while local search scales much better.</p>
+
+    <div style="background:#080c17;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:16px;">
+      <label for="cmpGrowthN" style="margin-top:0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span>Number of vertices (n)</span>
+        <strong id="cmpGrowthNValue" style="color:var(--accent);font-family:var(--font-mono);font-size:1.1rem;">5</strong>
+      </label>
+      <input id="cmpGrowthN" type="range" min="2" max="20" value="5" oninput="updateCmpGrowth()" style="width:100%;margin-top:10px;">
+
+      <div class="grid-2" style="margin-top:16px;">
+        <div style="background:var(--bg3);border:1px solid rgba(239,68,68,0.35);border-radius:var(--radius);padding:14px;">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:6px;">Brute Force — Exponential</div>
+          <div id="cmpBFValue" style="font-family:var(--font-mono);font-size:1.25rem;color:#fca5a5;font-weight:bold;line-height:1.4;">2⁵ = 32 partitions</div>
+        </div>
+        <div style="background:var(--bg3);border:1px solid rgba(16,185,129,0.35);border-radius:var(--radius);padding:14px;">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px;">Local Search — Polynomial</div>
+          <div id="cmpLSValue" style="font-family:var(--font-mono);font-size:1.25rem;color:#6ee7b7;font-weight:bold;line-height:1.4;">≈ 25 operations</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:12px;color:var(--text2);">
+          <span style="color:#fca5a5;font-family:var(--font-mono);">Brute force</span>
+          <span id="cmpBFBarLabel" style="font-family:var(--font-mono);color:#fca5a5;">32</span>
+        </div>
+        <div style="height:18px;background:#111827;border:1px solid var(--border);border-radius:20px;overflow:hidden;">
+          <div id="cmpBFBar" style="height:100%;width:25%;background:linear-gradient(90deg,#7f1d1d,#ef4444);border-radius:20px;transition:width 0.2s;"></div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 5px;font-size:12px;color:var(--text2);">
+          <span style="color:#6ee7b7;font-family:var(--font-mono);">Local search</span>
+          <span id="cmpLSBarLabel" style="font-family:var(--font-mono);color:#6ee7b7;">25</span>
+        </div>
+        <div style="height:18px;background:#111827;border:1px solid var(--border);border-radius:20px;overflow:hidden;">
+          <div id="cmpLSBar" style="height:100%;width:6.25%;background:linear-gradient(90deg,#064e3b,#10b981);border-radius:20px;transition:width 0.2s;"></div>
+        </div>
+      </div>
+    </div>
+
+    <table class="edu-table" style="margin-top:10px;">
+      <tr>
+        <th>Algorithm</th>
+        <th>Time Complexity</th>
+        <th>Space Complexity</th>
+        <th>Growth Type</th>
+      </tr>
+      <tr>
+        <td><strong>Brute Force</strong></td>
+        <td><code>O(2ⁿ × |E|)</code></td>
+        <td><code>O(n)</code></td>
+        <td style="color:#fca5a5;font-weight:bold;">Exponential</td>
+      </tr>
+      <tr>
+        <td><strong>Local Search</strong></td>
+        <td><code>O(k × (V + E))</code> or simplified <code>O(n²)</code></td>
+        <td><code>O(n)</code></td>
+        <td style="color:#6ee7b7;font-weight:bold;">Polynomial</td>
+      </tr>
+    </table>
+
+    <div class="box-info" style="margin-top:16px;">
+      Brute force checks every possible partition, which grows exponentially (2ⁿ), making it infeasible for large graphs. Local search only evaluates vertices and their neighbors, so it runs much faster, but it does not guarantee the optimal solution.
+    </div>
   </div>
 </div>
 
@@ -4447,7 +4509,7 @@ function initCmp() {
   cmpInitialized=true;
   drawGraph(document.getElementById('cmpBruteSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,CMP_START_PARTITION,-1);
   drawGraph(document.getElementById('cmpLocalSVG'),CMP_GRAPH.vertices,CMP_GRAPH.edges,CMP_START_PARTITION,-1);
-  drawGrowthChart();
+  updateCmpGrowth();
 }
 
 function cmpReset() {
@@ -4512,23 +4574,42 @@ function computeGain(vi, partition, edges) {
   return same-other;
 }
 
-function drawGrowthChart() {
-  const svg=document.getElementById('growthChart'); if(!svg)return;
-  const ns='http://www.w3.org/2000/svg'; svg.innerHTML='';
-  const W=700,H=320,PL=70,PR=30,PT=30,PB=50,IW=W-PL-PR,IH=H-PT-PB;
-  const nVals=Array.from({length:18},(_,i)=>i+2);
-  const bfVals=nVals.map(n=>Math.pow(2,n));
-  const lsVals=nVals.map(n=>n*n*3);
-  const logMax=Math.log2(Math.max(...bfVals));
-  [[PL,PT,PL,PT+IH],[PL,PT+IH,PL+IW,PT+IH]].forEach(([x1,y1,x2,y2])=>{const l=document.createElementNS(ns,'line');l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);l.setAttribute('stroke','#334155');l.setAttribute('stroke-width','1');svg.appendChild(l);});
-  const plotLine=(vals,color,dash='')=>{let d='';nVals.forEach((n,i)=>{const x=PL+(i/(nVals.length-1))*IW;const y=PT+IH-(Math.max(0,Math.log2(Math.max(1,vals[i])))/logMax)*IH;d+=(i===0?'M':'L')+`${x.toFixed(1)},${y.toFixed(1)} `;});const p=document.createElementNS(ns,'path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke',color);p.setAttribute('stroke-width','2.5');if(dash)p.setAttribute('stroke-dasharray',dash);svg.appendChild(p);};
-  plotLine(bfVals,'#ef4444');plotLine(lsVals,'#10b981','6,3');
-  nVals.filter((_,i)=>i%3===0).forEach((n,_)=>{const i=nVals.indexOf(n);const x=PL+(i/(nVals.length-1))*IW;const t=document.createElementNS(ns,'text');t.setAttribute('x',x);t.setAttribute('y',PT+IH+20);t.setAttribute('fill','#64748b');t.setAttribute('font-size','12');t.setAttribute('text-anchor','middle');t.textContent=n;svg.appendChild(t);});
-  [0,5,10,15,20].forEach(exp=>{const y=PT+IH-(exp/logMax)*IH;const t=document.createElementNS(ns,'text');t.setAttribute('x',PL-8);t.setAttribute('y',y+4);t.setAttribute('fill','#64748b');t.setAttribute('font-size','10');t.setAttribute('text-anchor','end');t.textContent=`2^${exp}`;svg.appendChild(t);const gl=document.createElementNS(ns,'line');gl.setAttribute('x1',PL);gl.setAttribute('y1',y);gl.setAttribute('x2',PL+IW);gl.setAttribute('y2',y);gl.setAttribute('stroke','#1e293b');gl.setAttribute('stroke-width','1');svg.appendChild(gl);});
-  [{color:'#ef4444',label:'Brute Force O(2ⁿ·|E|)',dash:''},{color:'#10b981',label:'Local Search O(n²·|E|)',dash:'6,3'}].forEach(({color,label,dash},i)=>{const lx=PL+IW-10,ly=PT+20+i*22;const ll=document.createElementNS(ns,'line');ll.setAttribute('x1',lx-40);ll.setAttribute('y1',ly);ll.setAttribute('x2',lx-10);ll.setAttribute('y2',ly);ll.setAttribute('stroke',color);ll.setAttribute('stroke-width','2.5');if(dash)ll.setAttribute('stroke-dasharray',dash);svg.appendChild(ll);const lt=document.createElementNS(ns,'text');lt.setAttribute('x',lx-44);lt.setAttribute('y',ly+4);lt.setAttribute('fill',color);lt.setAttribute('font-size','12');lt.setAttribute('text-anchor','end');lt.textContent=label;svg.appendChild(lt);});
+function formatInt(num) {
+  return Math.round(num).toLocaleString('en-US');
 }
 
-window.addEventListener('load', () => { drawGrowthChart(); showTriangleCase('nae-good'); });
+function updateCmpGrowth() {
+  const slider=document.getElementById('cmpGrowthN');
+  if(!slider)return;
+  const n=parseInt(slider.value,10);
+  const brute=Math.pow(2,n);
+  const local=n*n;
+  const maxLocal=20*20;
+
+  setEl('cmpGrowthNValue',n);
+  const bfValue=document.getElementById('cmpBFValue');
+  const lsValue=document.getElementById('cmpLSValue');
+  const bfBar=document.getElementById('cmpBFBar');
+  const lsBar=document.getElementById('cmpLSBar');
+  const bfLabel=document.getElementById('cmpBFBarLabel');
+  const lsLabel=document.getElementById('cmpLSBarLabel');
+
+  if(bfValue) bfValue.innerHTML=`2<sup>${n}</sup> = ${formatInt(brute)} partitions`;
+  if(lsValue) lsValue.textContent=`≈ ${formatInt(local)} operations`;
+  if(bfLabel) bfLabel.textContent=formatInt(brute);
+  if(lsLabel) lsLabel.textContent=formatInt(local);
+
+  if(bfBar){
+    const brutePct=Math.max(4,Math.min(100,(n/20)*100));
+    bfBar.style.width=brutePct+'%';
+  }
+  if(lsBar){
+    const localPct=Math.max(4,Math.min(100,(local/maxLocal)*100));
+    lsBar.style.width=localPct+'%';
+  }
+}
+
+window.addEventListener('load', () => { updateCmpGrowth(); showTriangleCase('nae-good'); });
 
 /* ============================================================
    TRIANGLE GADGET INTERACTIVE
